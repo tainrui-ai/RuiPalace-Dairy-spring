@@ -1,0 +1,34 @@
+.hero-title-container {
+  /* 适当加大容器内边距，留出视觉呼吸空间 */
+  padding: 0 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden; /* 防止溢出破坏整体布局 */
+}
+
+.hero-title {
+  /* 强制单行显示，避免单词被中途割裂 */
+  white-space: nowrap;
+  
+  /* 使用 clamp 实现流体响应式字号：最小 1.2rem，视口占比 4vw，最大 2.5rem */
+  font-size: clamp(1.2rem, 4vw, 2.5rem);
+  
+  /* 确保文本居中或对齐一致 */
+  text-align: center;
+  margin: 0;
+}
+
+.hero-subtitle {
+  white-space: nowrap;
+  font-size: clamp(0.85rem, 2vw, 1.2rem);
+  opacity: 0.85;
+}
+
+.cover-title {
+    font-size: 3rem;
+    color: var(--primary-color);
+    letter-spacing: 0.2em; /* 在这里设置你需要的字间距，例如 0.15em 或 0.2em */
+    font-weight: 600;
+    outline: none;
+    margin: 0;
+}

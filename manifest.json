@@ -1,0 +1,15 @@
+{
+  "name": "春天的心情 · 蕊宫",
+  "short_name": "蕊宫日记",
+  "start_url": "./index_3.html",
+  "display": "standalone",
+  "background_color": "#EFECE6",
+  "theme_color": "#F4EEDC",
+  "icons": [
+    {
+      "src": "image/flower1.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}

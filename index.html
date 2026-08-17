@@ -1,0 +1,1524 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#F4EEDC">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>春天的心情 · 蕊宫 · </title>
+
+    <style>
+:root {
+    --bg-goose-yellow: #F4EEDC; 
+    --text-ink: #333333;
+    --sub-text: #444444;
+    --line-color: #D8CEBC;
+    --primary-color: #2A2A2A;
+}
+
+        body {
+            background-color: #EFECE6;
+            margin: 0;
+            padding: 30px 20px;
+            font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "SimSun", "Georgia", "Times New Roman", serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .book-sheet {
+            width: 100%;
+            max-width: 760px;
+            height: 1070px;
+            background-color: var(--bg-goose-yellow) !important;
+            background-image: 
+                radial-gradient(circle at 50% 30%, rgba(255,255,255,0.4) 0%, rgba(247,242,227,0.85) 100%),
+                url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cg fill='none' stroke='%23D8CEBC' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round' opacity='0.4'%3E%3Cpath d='M30,50 C30,35 45,25 60,25 C75,25 85,35 85,45 C85,55 75,60 65,60 C55,60 50,55 50,50 C50,45 55,40 60,40 C65,40 70,45 70,50 M30,50 C15,50 5,60 5,75 C5,90 20,100 40,100 C60,100 70,90 70,75 C70,68 65,62 60,60 M60,25 C60,10 75,2 90,2 C105,2 115,12 115,25 M115,25 C115,35 105,45 90,45 C80,45 75,38 75,30'/%3E%3Cpath d='M120,130 C120,115 135,105 150,105 C165,105 175,115 175,125 C175,135 165,140 155,140 C145,140 140,135 140,130 C140,125 145,120 150,120 C155,120 160,125 160,130 M120,130 C105,130 95,140 95,155 C95,170 110,180 130,180 M150,105 C150,90 165,82 180,82 M150,140 C135,140 125,150 125,165'/%3E%3Cpath d='M120,50 C120,35 135,25 150,25 C165,25 175,35 175,45 C175,55 165,60 155,60 C145,60 140,55 140,50 C140,45 145,40 150,40 C155,40 160,45 160,50 M120,50 C105,50 95,60 95,75 C95,90 110,100 130,100 M150,25 C150,10 165,2 180,2 M150,60 C135,60 125,70 125,85'/%3E%3Cpath d='M30,130 C30,115 45,105 60,105 C75,105 85,115 85,125 C85,135 75,140 65,140 C55,140 50,135 50,130 C50,125 55,120 60,120 C65,120 70,125 70,130 M30,130 C15,130 5,140 5,155 C5,170 20,180 40,180 M60,105 C60,90 75,82 90,82 M60,140 C45,140 35,150 35,165'/%3E%3C/g%3E%3C/svg%3E");
+            background-repeat: repeat;
+            padding: 55px 65px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+            border: 1px solid var(--line-color);
+            position: relative;
+            box-sizing: border-box;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border-radius: 4px;
+        }
+
+        .page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 55px 65px;
+            box-sizing: border-box;
+            display: none;
+            flex-direction: column;
+            z-index: 2;
+            background: transparent;
+        }
+
+        .page.active {
+            display: flex;
+        }
+
+        .corner-flower-sticker {
+            position: absolute;
+            pointer-events: none;
+            z-index: 10;
+            mix-blend-mode: multiply;
+            filter: contrast(135%) brightness(108%);
+            transition: all 0.3s ease;
+        }
+
+        .pos-top-right { top: -35px; right: -35px; width: 460px; transform: rotate(0deg); }
+        .pos-top-left { top: -35px; left: -35px; width: 460px; transform: scaleX(-1); }
+        .pos-bottom-right { bottom: -35px; right: -35px; width: 460px; transform: scaleY(-1); }
+        .pos-bottom-left { bottom: -35px; left: -35px; width: 460px; transform: scale(-1, -1); }
+
+        .cover-page {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .lang-switcher-bottom {
+            margin-top: 30px;
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            z-index: 20;
+        }
+        
+        /* 多语言按钮：未选中时颜色更淡、更统一 */
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.35);
+            border: 1px solid rgba(216, 206, 188, 0.6);
+            padding: 5px 11px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            border-radius: 3px;
+            font-family: inherit;
+            color: rgba(68, 68, 68, 0.7);
+            transition: all 0.2s;
+        }
+        .lang-btn:hover {
+            background: rgba(255, 255, 255, 0.7);
+            color: var(--primary-color);
+        }
+        /* 选中状态：背景加深为稍深米色，文字沉稳突出 */
+        .lang-btn.active {
+            background: #E5DCC2;
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+            font-weight: 600;
+        }
+
+        .elegant-backup-bar {
+            margin-top: 18px;
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.85rem;
+            z-index: 20;
+            color: var(--sub-text);
+        }
+        .elegant-link {
+            background: none;
+            border: none;
+            color: var(--sub-text);
+            font-family: inherit;
+            font-size: 0.85rem;
+            cursor: pointer;
+            text-decoration: underline;
+            padding: 0;
+            transition: opacity 0.2s;
+        }
+        .elegant-link:hover {
+            opacity: 0.6;
+        }
+
+        /* 标题容器：悬停时显示可编辑提示与铅笔图标 */
+        .cover-title-wrapper {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            margin-bottom: 40px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-color);
+        }
+        
+        .cover-title-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cover-title {
+            font-size: 3rem;
+            color: var(--primary-color);
+            letter-spacing: 0.12em;
+            font-weight: 600;
+            outline: none;
+            margin: 0;
+        }
+
+        /* 极淡的铅笔图标：默认隐藏/半透明，悬停时显现 */
+        .edit-pencil-icon {
+            font-size: 1.3rem;
+            opacity: 0.25;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .cover-title-wrapper:hover .edit-pencil-icon {
+            opacity: 0.85;
+            transform: scale(1.1);
+        }
+
+        /* 标题旁的小字提示 */
+        .edit-hint-text {
+            font-size: 0.8rem;
+            color: var(--sub-text);
+            opacity: 0;
+            transform: translateY(-4px);
+            transition: all 0.3s ease;
+            letter-spacing: 0.08em;
+            margin-top: 6px;
+        }
+        .cover-title-wrapper:hover .edit-hint-text {
+            opacity: 0.8;
+            transform: translateY(0);
+        }
+
+        .cover-subtitle {
+            font-size: 1.15rem;
+            color: var(--sub-text);
+            letter-spacing: 0.25em;
+            margin-bottom: 40px;
+        }
+
+        /* 首页“翻开书卷”按钮：透明磨砂质感 */
+        .btn-open {
+            background-color: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            color: var(--primary-color);
+            border: 1px solid var(--line-color);
+            padding: 12px 42px;
+            font-size: 1.1rem;
+            font-family: inherit;
+            border-radius: 4px;
+            cursor: pointer;
+            letter-spacing: 0.08em;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+        }
+        .btn-open:hover { 
+            background-color: rgba(255, 255, 255, 0.9); 
+            border-color: var(--primary-color);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .page-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--line-color);
+            padding-bottom: 12px;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 15;
+        }
+        .nav-title {
+            font-size: 1.2rem;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        .btn-link {
+            background: none;
+            border: none;
+            color: var(--sub-text);
+            font-family: inherit;
+            font-size: 0.95rem;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .btn-link:hover { opacity: 0.7; }
+
+        .sticker-toggle-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px dashed var(--line-color);
+            padding: 6px 12px;
+            border-radius: 4px;
+            margin-bottom: 12px;
+            font-size: 0.85rem;
+            position: relative;
+            z-index: 20;
+        }
+        .sticker-toolbar {
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid var(--line-color);
+            padding: 10px 14px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 20;
+            font-size: 0.85rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            display: none;
+        }
+        .sticker-toolbar.show {
+            display: block;
+        }
+        .sticker-options {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+        .sticker-thumb {
+            width: 32px;
+            height: 32px;
+            object-fit: cover;
+            border: 1px solid var(--line-color);
+            border-radius: 3px;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: all 0.2s;
+        }
+        .sticker-thumb.active, .sticker-thumb:hover {
+            opacity: 1;
+            border-color: var(--primary-color);
+            transform: scale(1.1);
+        }
+        .pos-btn {
+            background: none;
+            border: 1px solid var(--line-color);
+            padding: 2px 6px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-family: inherit;
+            color: var(--primary-color);
+        }
+        .pos-btn.active, .pos-btn:hover {
+            background: rgba(255, 255, 255, 0.95);
+            border-color: var(--primary-color);
+        }
+
+        .index-page-content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-right: 5px;
+            position: relative;
+            z-index: 15;
+        }
+        .index-actions {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 15;
+        }
+        .btn-primary {
+            background-color: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            color: var(--primary-color);
+            border: 1px solid var(--line-color);
+            padding: 8px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.95rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: all 0.2s ease;
+        }
+        .btn-primary:hover { 
+            background-color: rgba(255, 255, 255, 0.9); 
+            border-color: var(--primary-color);
+        }
+
+        .diary-catalog-item {
+            padding: 14px 18px;
+            margin-bottom: 12px;
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid var(--line-color);
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .diary-catalog-item:hover {
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateY(-1px);
+            border-color: var(--primary-color);
+        }
+        .catalog-date {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 0.95rem;
+        }
+        .catalog-preview {
+            color: var(--text-ink);
+            font-size: 0.95rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 380px;
+            margin-left: 20px;
+            flex-grow: 1;
+        }
+
+        .diary-header {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 20px;
+            border-bottom: 1px solid var(--line-color);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 15;
+        }
+        .editable-input {
+            background: transparent;
+            border: none;
+            border-bottom: 1px dashed transparent;
+            font-family: inherit;
+            font-size: 0.95rem;
+            color: var(--sub-text);
+            outline: none;
+            padding: 4px;
+        }
+        .editable-input:focus { border-bottom: 1px dashed var(--sub-text); }
+
+        .writing-area {
+            flex-grow: 1;
+            position: relative;
+            z-index: 15;
+        }
+        .diary-textarea {
+            width: 100%;
+            height: 500px;
+            background: transparent;
+            border: none;
+            outline: none;
+            resize: none;
+            font-size: 1.1rem;
+            line-height: 2.1;
+            color: var(--text-ink);
+            font-family: inherit;
+        }
+
+        .diary-footer {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed var(--line-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 15;
+        }
+        .poetry-footer { font-size: 1rem; color: var(--sub-text); font-style: italic; cursor: pointer; }
+        .poetry-footer:hover { opacity: 0.7; }
+        .brand-footer { font-size: 0.85rem; color: var(--primary-color); letter-spacing: 0.03em; }
+
+        /* ================= 首页右侧拉出式书签：透明磨砂感 ================= */
+        .guide-sidebar-tab {
+            position: fixed;
+            right: 0;
+            top: 35%;
+            transform: translateY(-50%);
+            background: rgba(244, 238, 220, 0.75);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            color: var(--primary-color);
+            border: 1px solid var(--line-color);
+            border-right: none;
+            padding: 16px 9px;
+            font-size: 0.9rem;
+            writing-mode: vertical-rl;
+            letter-spacing: 0.15em;
+            cursor: pointer;
+            border-top-left-radius: 6px;
+            border-bottom-left-radius: 6px;
+            box-shadow: -4px 4px 15px rgba(0,0,0,0.08);
+            z-index: 100;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+        .guide-sidebar-tab:hover {
+            background: rgba(255, 255, 255, 0.95);
+            padding-right: 13px;
+        }
+
+        .guide-drawer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 150;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .guide-drawer-overlay.show {
+            display: block;
+            opacity: 1;
+        }
+
+        .guide-drawer {
+            position: fixed;
+            top: 0;
+            right: -480px;
+            width: 440px;
+            height: 100vh;
+            background-color: var(--bg-goose-yellow);
+            background-image: radial-gradient(circle at 50% 30%, rgba(255,255,255,0.4) 0%, rgba(247,242,227,0.85) 100%);
+            border-left: 1px solid var(--line-color);
+            box-shadow: -10px 0 30px rgba(0,0,0,0.15);
+            z-index: 160;
+            transition: right 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            display: flex;
+            flex-direction: column;
+            padding: 40px 30px;
+            box-sizing: border-box;
+        }
+        .guide-drawer.open {
+            right: 0;
+        }
+
+        .guide-drawer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--line-color);
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
+        .guide-drawer-title {
+            font-size: 1.15rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+        .guide-close-btn {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: var(--sub-text);
+        }
+        .guide-close-btn:hover { opacity: 0.6; }
+
+        .guide-drawer-content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+        .guide-section {
+            margin-bottom: 16px;
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid var(--line-color);
+            padding: 12px 15px;
+            border-radius: 4px;
+        }
+        .guide-h2 {
+            font-size: 0.95rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 6px;
+            letter-spacing: 0.05em;
+        }
+        .guide-p {
+            font-size: 0.85rem;
+            line-height: 1.6;
+            color: var(--text-ink);
+            margin: 0;
+        }
+    </style>
+
+</head>
+<body>
+
+    <!-- 首页右侧固定的古风透明磨砂书签 -->
+    <div class="guide-sidebar-tab" onclick="toggleGuideDrawer()" id="guideTabLabel">使用说明</div>
+
+    <!-- 遮罩层 -->
+    <div class="guide-drawer-overlay" id="guideOverlay" onclick="toggleGuideDrawer()"></div>
+
+    <!-- 右侧拉出式说明文档抽屉 -->
+    <div class="guide-drawer" id="guideDrawerPanel">
+        <div class="guide-drawer-header">
+            <span class="guide-drawer-title" id="guideNavTitle">使用说明与版权指引</span>
+            <button class="guide-close-btn" onclick="toggleGuideDrawer()">✕</button>
+        </div>
+        <div class="guide-drawer-content">
+            <div class="guide-section">
+                <div class="guide-h2" id="h2Title1">🌸 1. 书卷翻阅与日记落笔</div>
+                <div class="guide-p" id="pText1">在首页点击“翻开书卷”即可进入目录。您可以按月份查看过往藏珍，或点击右上角“书写新日记”记录当下的节气与心境。落笔时支持自由更换花卉贴纸、调整贴纸角位，并可点击底部诗词切换多语种春日名句。</div>
+            </div>
+
+            <div class="guide-section">
+                <div class="guide-h2" id="h2Title2">📥 2. 导出备份（本地存档与隐私）</div>
+                <div class="guide-p" id="pText2">位于首页底部的“导出备份”按钮，可将您所有的日记数据打包生成一个本地 JSON 文件。本系统采用纯前端本地存储（LocalStorage），您的文字心血完全掌握在您自己手中，注重绝对的隐私安全。建议定期导出备份。</div>
+            </div>
+
+            <div class="guide-section">
+                <div class="guide-h2" id="h2Title3">🔄 3. 恢复备份（数据导入）</div>
+                <div class="guide-p" id="pText3">若更换了浏览器、设备或清除过本地缓存，可点击首页底部的“恢复备份”按钮，选择以往导出的 JSON 备份文件即可一键还原全部日记内容。</div>
+            </div>
+
+            <div class="guide-section">
+                <div class="guide-h2" id="h2Title4">🌐 4. 多语言支持与交互体验</div>
+                <div class="guide-p" id="pText4">本站完美支持中、英、德、法、俄、西六种语言。切换语言后，使用说明及整站文案将同步无缝转换。排版与交互设计均充分契合东方式极简美学。</div>
+            </div>
+            
+            <div style="margin-top: 15px; text-align: center; font-size: 0.75rem; color: var(--sub-text); line-height: 1.5;" id="copyrightText">
+                © 2026 蕊宫版权所有保留所有权利。未经授权，禁止任何形式的商业转载、改编或盗用。
+            </div>
+        </div>
+    </div>
+
+    <div class="book-sheet">
+        <img src="" alt="花卉贴纸" class="corner-flower-sticker" id="stickerImg">
+
+        <!-- 第一页：固定封面 -->
+        <div class="page cover-page active" id="pageCover">
+            <!-- 优化后的标题区域：带悬停铅笔图标与可修改提示 -->
+            <div class="cover-title-wrapper" title="点击即可修改标题">
+                <div class="cover-title-row">
+                    <h1 class="cover-title" id="coverTitle" contenteditable="true">春天的心情</h1>
+                    <span class="edit-pencil-icon">✏️</span>
+                </div>
+                <span class="edit-hint-text" id="editHintText">（点击标题可修改）</span>
+            </div>
+
+            <div class="cover-subtitle" id="coverSubtitle">—— 岁时流转 · 笔尖藏珍 ——</div>
+            <button class="btn-open" id="btnOpenText" onclick="goToPage('pageIndex')">翻开书卷</button>
+            
+            <div class="lang-switcher-bottom">
+                <button class="lang-btn active" onclick="switchLanguage('zh')">中</button>
+                <button class="lang-btn" onclick="switchLanguage('en')">EN</button>
+                <button class="lang-btn" onclick="switchLanguage('de')">DE</button>
+                <button class="lang-btn" onclick="switchLanguage('fr')">FR</button>
+                <button class="lang-btn" onclick="switchLanguage('ru')">RU</button>
+                <button class="lang-btn" onclick="switchLanguage('es')">ES</button>
+            </div>
+
+            <!-- 首页优雅极简的备份与恢复入口 -->
+            <div class="elegant-backup-bar">
+                <button class="elegant-link" onclick="exportDiaryData()" id="btnExportData">导出备份</button>
+                <span>·</span>
+                <label for="importFile" class="elegant-link" id="btnImportDataLabel" style="cursor: pointer;">恢复备份</label>
+                <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importDiaryData(event)">
+            </div>
+            
+            <div style="margin-top: 20px; font-size: 0.9rem; color: var(--primary-color); letter-spacing: 0.25em;" id="coverBrand">—— 蕊宫 ——</div>
+        </div>
+
+        <!-- 第二页：目录页 -->
+        <div class="page" id="pageIndex">
+            <div class="page-nav">
+                <span class="nav-title" id="indexTitleText">目录与过往藏珍</span>
+                <button class="btn-link" id="btnCloseBook" onclick="goToPage('pageCover')">合上书封</button>
+            </div>
+            <div class="index-actions">
+                <button class="btn-link" id="btnBackToMonths" onclick="renderMonthCatalog()" style="display: none; font-size: 0.95rem;">← 返回月份目录</button>
+                <span id="currentMonthIndicator" style="font-size: 0.95rem; font-weight: 600; color: var(--primary-color);"></span>
+                <button class="btn-primary" id="btnNewDiary" onclick="openNewDiary()">+ 书写新日记</button>
+            </div>
+            <div class="index-page-content" id="catalogList"></div>
+
+            <div style="text-align: center; font-size: 0.85rem; color: var(--primary-color); letter-spacing: 0.15em; margin-top: 10px;" id="indexBrandText">—— 蕊宫 ——</div>
+        </div>
+
+        <!-- 第三页：写作/详情页 -->
+        <div class="page" id="pageWrite">
+            <div class="page-nav">
+                <span class="nav-title" id="writePageTitle">落笔生花</span>
+                <button class="btn-link" id="btnBackCatalog" onclick="handleBackFromWrite()">返回目录</button>
+            </div>
+            
+            <div class="sticker-toggle-bar">
+                <span id="stickerStatusHint">🌸 当前已贴上精致花卉装饰</span>
+                <button class="btn-link" onclick="toggleStickerToolbar()" id="btnToggleSticker" style="font-size: 0.85rem;">更换/调整贴纸</button>
+            </div>
+
+            <div class="sticker-toolbar" id="stickerToolbarPanel">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <span id="labelStickerPick" style="font-weight: 600;">🌸 选择贴纸（11款）：</span>
+                    <button class="btn-link" onclick="toggleStickerToolbar()" id="btnCloseStickerPanel" style="font-size: 0.8rem;">完成/收起</button>
+                </div>
+                <div class="sticker-options" id="stickerThumbnails"></div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-top: 10px; border-top: 1px dashed var(--line-color); padding-top: 6px;">
+                    <span id="labelStickerPos">贴纸角位：</span>
+                    <button class="pos-btn" onclick="setStickerPosition('top-right')" id="posTR">右上</button>
+                    <button class="pos-btn" onclick="setStickerPosition('top-left')" id="posTL">左上</button>
+                    <button class="pos-btn" onclick="setStickerPosition('bottom-right')" id="posBR">右下</button>
+                    <button class="pos-btn" onclick="setStickerPosition('bottom-left')" id="posBL">左下</button>
+                </div>
+            </div>
+
+            <header class="diary-header">
+                <input type="text" class="editable-input" id="inputLocation" value="纽比贝格" style="width: 110px;">
+                <input type="date" class="editable-input" id="inputDate" style="width: 135px;">
+                <input type="text" class="editable-input" id="inputWeather" value="" style="width: 160px;">
+            </header>
+
+            <main class="writing-area">
+                <textarea class="diary-textarea" id="textareaContent" placeholder="在此落笔，记录节气与心境……"></textarea>
+            </main>
+
+            <footer class="diary-footer">
+                <button class="btn-link" id="btnDelete" style="color: var(--sub-text);" onclick="deleteCurrentDiary()">删除这篇</button>
+                <div class="poetry-footer" id="poetryFooterText" onclick="setRandomPoetry()" title="点击切换一首春日诗词">“等闲识得东风面，万紫千红总是春。”</div>
+                <div class="brand-footer" id="writeBrandText">—— 蕊宫 ——</div>
+                <button class="btn-primary" id="btnSaveRecord" onclick="saveAndReturnIndex()" style="padding: 6px 16px; font-size: 0.9rem;">保存收录</button>
+            </footer>
+        </div>
+    </div>
+
+
+
+    <script>
+        let editingDate = null;
+        let currentViewingMonth = null; 
+        let currentStickerSrc = 'image/flower1.jpg';
+        let currentStickerPos = 'top-right';
+        let currentPoetryIndex = 0; 
+
+        const flowerList = [
+            'image/flower1.jpg', 'image/flower2.jpg', 'image/flower3.jpg', 'image/flower4.jpg',
+            'image/flower5.jpg', 'image/flower6.jpg', 'image/flower7.jpg', 'image/flower8.jpg',
+            'image/flower9.jpg', 'image/flower10.jpg', 'image/flower11.jpg'
+        ];
+
+        const springPoetries = [
+            {
+                zh: "“等闲识得东风面，万紫千红总是春。”",
+                en: "“Recognizing the east wind's face with ease, a myriad of purples and reds always mean spring.”",
+                de: "“Leicht erkennt man das Gesicht des Ostwinds, ein Meer von Farben ist stets der Frühling.”",
+                fr: "“Reconnaissant aisément le visage du vent d'est, une myriade de couleurs est toujours le printemps.”",
+                ru: "“Легко узнать лицо восточного ветра, мириады красок — это всегда весна.”",
+                es: "“Reconociendo fácilmente la cara del viento del este, una miríada de púrpuras y rojos siempre significan primavera.”"
+            },
+            {
+                zh: "“胜日寻芳泗水滨，无边光景一时新。”",
+                en: "“Seeking blossoms by the river on a lovely day, the boundless scenery is suddenly renewed.”",
+                de: "“An einem schönen Tag am Fluss nach Blüten suchend, erneuert sich die unendliche Landschaft auf einmal.”",
+                fr: "“Cherchant des fleurs au bord de la rivière par une belle journée, le paysage infini est soudain renouvelé.”",
+                ru: "“В прекрасный день ищу цветы у реки, бескрайние пейзажи внезапно обновляются.”",
+                es: "“Buscando flores junto al río en un día encantador, el paisaje sin límites se renueva de repente.”"
+            },
+            {
+                zh: "“竹外桃花三两枝，春江水暖鸭先知。”",
+                en: "“Two or three peach branches outside the bamboo, ducks are the first to know the spring river's warmth.”",
+                de: "“Zwei oder drei Pfirsichzweige hinter dem Bambus, die Enten spüren als Erste die Wärme des Flusses.”",
+                fr: "“Deux ou trois branches de pêcher derrière les bambous, les canards sentent les premiers la chaleur de l'eau.”",
+                ru: "“Две-три ветки персика за бамбуком, утки первыми узнают тепло весенней реки.”",
+                es: "“Dos o tres ramas de durazno fuera del bambú, los patos son los primeros en conocer la calidez del río.”"
+            },
+            {
+                zh: "“草长莺飞二月天，拂堤杨柳醉春烟。”",
+                en: "“Grass grows and orioles fly in the second month, weeping willows brush the banks, drunk in spring mist.”",
+                de: "“Gras wächst und Pirole fliegen im zweiten Monat, Trauerweiden streifen die Ufer, trunken im Frühlingsnebel.”",
+                fr: "“L'herbe pousse et les loriots volent au 2ème mois, les saules frôlent les rives, ivres de brume.”",
+                ru: "“Трава растет и иволги летают, плакучие ивы касаются берегов, пьяные от весеннего тумана.”",
+                es: "“La hierba crece y los oropéndolas vuelan en el segundo mes, los sauces rozan las orillas, borrachos de bruma primaveral.”"
+            },
+            {
+                zh: "“春色满园关不住，一枝红杏出墙来。”",
+                en: "“Spring's beauty fills the garden and cannot be contained; a red apricot branch reaches over the wall.”",
+                de: "“Die Frühlingspracht lässt sich nicht einsperren; ein Zweig roter Aprikose ragt über die Mauer.”",
+                fr: "“Le printemps remplit le jardin et ne peut être contenu ; une branche d'abricotier dépasse du mur.”",
+                ru: "“Весну в саду не удержать; ветка красного абрикоса тянется через стену.”",
+                es: "“La belleza de la primavera llena el jardín y no se puede contener; una rama de albaricoque rojo se asoma por encima de la pared.”"
+            },
+            {
+                zh: "“迟日江山丽，春风花草香。”",
+                en: "“Spring days are long and the landscape beautiful; the spring breeze brings the fragrance of flowers.”",
+                de: "“Die Frühlingstage sind lang und die Landschaft schön, der Frühlingswind bringt den Duft von Blumen.”",
+                fr: "“Les jours sont longs et le paysage est beau, la brise printanière apporte le parfum des fleurs.”",
+                ru: "“Весенние дни длинны и пейзаж прекрасен, весенний ветер приносит аромат цветов.”",
+                es: "“Los días de primavera son largos y el paisaje hermoso; la brisa primaveral trae la fragancia de las flores.”"
+            },
+            {
+                zh: "“随风潜入夜，润物细无声。”",
+                en: "“Slipping into the night with the wind, it moistens everything softly and silently.”",
+                de: "“Mit dem Wind schlüpft er in die Nacht, er befeuchtet alles sanft und lautlos.”",
+                fr: "“Se glissant dans la nuit avec le vent, elle humidifie tout doucement et en silence.”",
+                ru: "“Проскальзывая в ночь с ветром, он увлажняет всё мягко и беззвучно.”",
+                es: "“Deslizándose en la noche con el viento, humedece todo suave y silenciosamente.”"
+            },
+            {
+                zh: "“知否，知否？应是绿肥红瘦。”",
+                en: "“Do you know? It should be that the green leaves are plump and the red flowers are thin.”",
+                de: "“Weißt du? Es sollte sein, dass die grünen Blätter üppig und die roten Blumen welk sind.”",
+                fr: "“Sais-tu ? Il devrait en être ainsi : les feuilles vertes sont charnues et les fleurs rouges minces.”",
+                ru: "“Знаешь ли ты? Должно быть так, что зеленые листья полны, а красные цветы тонки.”",
+                es: "“¿Sabes? Debería ser que las hojas verdes están llenas y las flores rojas delgadas.”"
+            },
+            {
+                zh: "“莫听穿林打叶声，何妨吟啸且徐行。”",
+                en: "“Listen not to rain beating against trees; why not sing and walk slowly?”",
+                de: "“Hör nicht auf den Regen an den Bäumen; warum nicht singen und langsam gehen?”",
+                fr: "“N'écoutez pas la pluie battre contre les arbres ; pourquoi ne pas chanter et marcher lentement ?”",
+                ru: "“Не слушай шум дождя по деревьям; почему бы не петь и не идти медленно?”",
+                es: "“No escuches la lluvia golpeando los árboles; ¿por qué no cantar y caminar despacio?”"
+            },
+            {
+                zh: "“人面不知何处去，桃花依旧笑春风。”",
+                en: "“I know not where that face has gone; peach blossoms still smile in the spring breeze.”",
+                de: "“Ich weiß nicht, wohin dieses Gesicht verschwand; Pfirsichblüten lächeln noch immer im Frühlingswind.”",
+                fr: "“Je ne sais où ce visage est allé ; les fleurs de pêcher sourient toujours dans la brise.”",
+                ru: "“Не знаю, куда ушло это лицо; цветы персика всё ещё улыбаются весеннему ветру.”",
+                es: "“No sé a dónde se ha ido ese rostro; las flores de durazno aún sonríen en la brisa de primavera.”"
+            },
+            {
+                zh: "“杨柳阴阴细雨晴，残花落尽见流莺。”",
+                en: "“Willows offer deep shade as fine rain clears; with faded flowers gone, wandering orioles appear.”",
+                de: "“Weiden spenden tiefen Schatten nach dem Regen; wenn verblühte Blumen fallen, erscheinen Pirole.”",
+                fr: "“Les saules offrent une ombre après la pluie ; avec les fleurs fanées tombées, les loriots apparaissent.”",
+                ru: "“Ивы дают густую тень после дождя; когда опали увядшие цветы, появляются иволги.”",
+                es: "“Los sauces ofrecen sombra profunda cuando la lluvia aclara; con las flores marchitas caídas, aparecen las oropéndolas.”"
+            },
+            {
+                zh: "“最是一年春好处，绝胜烟柳满皇州。”",
+                en: "“This is the best time of spring, far surpassing the smoky willows that fill the capital.”",
+                de: "“Dies ist die beste Frühlingszeit, weit besser als die rauchigen Weiden der Hauptstadt.”",
+                fr: "“C'est la meilleure période du printemps, dépassant de loin les saules enfumés de la capitale.”",
+                ru: "“Это лучшее время весны, намного превосходящее дымчатые ивы столицы.”",
+                es: "“Este es el mejor momento de la primavera, superando con creces a los sauces ahumados que llenan la capital.”"
+            }
+        ];
+
+        function updatePoetryDisplay() {
+            if (currentPoetryIndex >= 0 && currentPoetryIndex < springPoetries.length) {
+                document.getElementById('poetryFooterText').innerText = springPoetries[currentPoetryIndex][currentLang];
+            }
+        }
+
+        function setRandomPoetry() {
+            currentPoetryIndex = Math.floor(Math.random() * springPoetries.length);
+            updatePoetryDisplay();
+        }
+
+        const translations = {
+            zh: {
+                title: "春天的心情",
+                editHint: "（点击标题可修改）",
+                subtitle: "—— 岁时流转 · 笔尖藏珍 ——",
+                openBtn: "翻开书卷",
+                indexTitle: "目录与过往藏珍",
+                closeBook: "合上书封",
+                newDiary: "+ 书写新日记",
+                writeTitle: "落笔生花",
+                backCatalog: "返回目录",
+                backMonths: "← 返回月份目录",
+                stickerHint: "🌸 当前已贴上精致花卉装饰",
+                toggleSticker: "更换/调整贴纸",
+                stickerPick: "🌸 选择贴纸（11款）：",
+                stickerPos: "贴纸角位：",
+                closePanel: "完成/收起",
+                posTR: "右上", posTL: "左上", posBR: "右下", posBL: "左下",
+                defaultLocation: "纽比贝格",
+                defaultWeather: "立春 · 晴 24°C",
+                placeholder: "在此落笔，记录节气与心境……",
+                saveBtn: "保存收录",
+                deleteBtn: "删除这篇",
+                brandText: "—— 蕊宫 ——",
+                emptyCatalog: "书卷尚为空白，点击上方“书写新日记”开启第一页吧。",
+                alertDateContent: "请填写日期与日记正文。",
+                alertExists: "该日期的日记已存在，请直接在目录点击修改。",
+                alertSuccess: "已成功收录至蕊宫目录",
+                confirmDelete: "确定要删去这篇藏珍吗？",
+                monthEntriesUnit: count => `收录有 ${count} 篇春日日记`,
+                clickEnter: "点击进入 >",
+                exportBtn: "导出备份",
+                importBtn: "恢复备份",
+                backupSuccess: "备份恢复成功！页面即将刷新。",
+                backupError: "文件格式错误，无法恢复备份！",
+                guideTab: "使用说明",
+                guideTitle: "使用说明与版权指引",
+                g1_title: "🌸 1. 书卷翻阅与日记落笔",
+                g1_text: "在首页点击“翻开书卷”即可进入目录。您可以按月份查看过往藏珍，或点击右上角“书写新日记”记录当下的节气与心境。落笔时支持自由更换花卉贴纸、调整贴纸角位，并可点击底部诗词切换多语种春日名句。",
+                g2_title: "📥 2. 导出备份（本地存档与隐私）",
+                g2_text: "位于首页底部的“导出备份”按钮，可将您所有的日记数据打包生成一个本地 JSON 文件。本系统采用纯前端本地存储（LocalStorage），您的文字心血完全掌握在您自己手中，注重绝对的隐私安全。建议定期导出备份。",
+                g3_title: "🔄 3. 恢复备份（数据导入）",
+                g3_text: "若更换了浏览器、设备或清除过本地缓存，可点击首页底部的“恢复备份”按钮，选择以往导出的 JSON 备份文件即可一键还原全部日记内容。",
+                g4_title: "🌐 4. 多语言支持与交互体验",
+                g4_text: "本站完美支持中、英、德、法、俄、西六种语言。切换语言后，使用说明及整站文案将同步无缝转换。排版与交互设计均充分契合东方式极简美学。",
+                copyright: "© 2026 蕊宫版权所有保留所有权利。未经授权，禁止任何形式的商业转载、改编或盗用。"
+            },
+            en: {
+                title: "Spring Mood",
+                editHint: "(Click title to edit)",
+                subtitle: "Seasons Flow · Treasures in Pen",
+                openBtn: "Open Book",
+                indexTitle: "Catalog & Past Treasures",
+                closeBook: "Close Cover",
+                newDiary: "+ Write New Diary",
+                writeTitle: "Inking Blossoms",
+                backCatalog: "Back to Catalog",
+                backMonths: "← Back to Months",
+                stickerHint: "🌸 Floral sticker applied",
+                toggleSticker: "Change/Adjust Sticker",
+                stickerPick: "🌸 Select Sticker (11 items):",
+                stickerPos: "Sticker Corner:",
+                closePanel: "Done",
+                posTR: "TR", posTL: "TL", posBR: "BR", posBL: "BL",
+                defaultLocation: "Neubiberg",
+                defaultWeather: "Spring · Sunny 24°C",
+                placeholder: "Write down your solar terms and moods here...",
+                saveBtn: "Save & Record",
+                deleteBtn: "Delete Entry",
+                brandText: "—— Rui Palace ——",
+                emptyCatalog: "The book is blank. Click '+ Write New Diary' above to start your first page.",
+                alertDateContent: "Please fill in the date and diary content.",
+                alertExists: "A diary for this date already exists. Please edit it directly from the catalog.",
+                alertSuccess: "Successfully recorded into Rui Palace catalog.",
+                confirmDelete: "Are you sure you want to delete this treasure?",
+                monthEntriesUnit: count => `${count} entries recorded`,
+                clickEnter: "View >",
+                exportBtn: "Export Backup",
+                importBtn: "Restore Backup",
+                backupSuccess: "Backup restored successfully! The page will reload.",
+                backupError: "Invalid file format, cannot restore backup!",
+                guideTab: "Instructions",
+                guideTitle: "Instructions & Copyright Guide",
+                g1_title: "🌸 1. Reading & Writing Diaries",
+                g1_text: "Click 'Open Book' on the cover to enter the catalog. View past treasures by month or click '+ Write New Diary'. Change floral stickers, adjust corners, and click the poetry footer for multilingual spring verses.",
+                g2_title: "📥 2. Export Backup (Local Storage & Privacy)",
+                g2_text: "The 'Export Backup' button packages your diary data into a local JSON file. Powered by pure frontend local storage, your data remains entirely in your hands with absolute privacy.",
+                g3_title: "🔄 3. Restore Backup",
+                g3_text: "If you change browsers or clear cache, click 'Restore Backup' and select your previous JSON backup file to restore all entries instantly.",
+                g4_title: "🌐 4. Multilingual & Aesthetics",
+                g4_text: "Supports Chinese, English, German, French, Russian, and Spanish. Seamlessly switch languages while enjoying minimalist oriental aesthetics.",
+                copyright: "© 2026 Rui Palace. All rights reserved. Unauthorized commercial reproduction or adaptation is prohibited."
+            },
+            de: {
+                title: "Frühlingsstimmung",
+                editHint: "(Titel zum Bearbeiten anklicken)",
+                subtitle: "Jahreszeiten im Fluss · Schätze der Feder",
+                openBtn: "Buch öffnen",
+                indexTitle: "Katalog & Vergangene Schätze",
+                closeBook: "Umschlag schließen",
+                newDiary: "+ Neues Tagebuch",
+                writeTitle: "Blüten schreiben",
+                backCatalog: "Zurück zum Katalog",
+                backMonths: "← Zurück zu Monaten",
+                stickerHint: "🌸 Blumenaufkleber angebracht",
+                toggleSticker: "Aufkleber ändern",
+                stickerPick: "🌸 Aufkleber wählen (11 Stk.):",
+                stickerPos: "Ecke:",
+                closePanel: "Fertig",
+                posTR: "Oben-Rechts", posTL: "Oben-Links", posBR: "Unten-Rechts", posBL: "Unten-Links",
+                defaultLocation: "Neubiberg",
+                defaultWeather: "Frühling · Sonnig 24°C",
+                placeholder: "Schreiben Sie hier Ihre Jahreszeiten und Stimmungen auf...",
+                saveBtn: "Speichern",
+                deleteBtn: "Löschen",
+                brandText: "—— Rui Palast ——",
+                emptyCatalog: "Das Buch ist leer. Klicken Sie oben auf „Neues Tagebuch“, um zu beginnen.",
+                alertDateContent: "Bitte füllen Sie Datum und Tagebuchinhalt aus.",
+                alertExists: "Ein Tagebuch für dieses Datum existiert bereits.",
+                alertSuccess: "Erfolgreich im Katalog gespeichert.",
+                confirmDelete: "Möchten Sie diesen Schatz wirklich löschen?",
+                monthEntriesUnit: count => `${count} Einträge`,
+                clickEnter: "Öffnen >",
+                exportBtn: "Backup exportieren",
+                importBtn: "Backup wiederherstellen",
+                backupSuccess: "Backup erfolgreich wiederhergestellt! Die Seite wird neu geladen.",
+                backupError: "Ungültiges Dateiformat, Backup konnte nicht wiederhergestellt werden!",
+                guideTab: "Anleitung",
+                guideTitle: "Anleitung & Urheberrecht",
+                g1_title: "🌸 1. Lesen & Tagebuch schreiben",
+                g1_text: "Klicken Sie auf „Buch öffnen“, um den Katalog aufzurufen. Betrachten Sie Schätze nach Monat oder schreiben Sie ein neues Tagebuch.",
+                g2_title: "📥 2. Backup exportieren (Datenschutz)",
+                g2_text: "Die Schaltfläche „Backup exportieren“ speichert alle Daten lokal als JSON. Dank reiner Frontend-Speicherung bleibt Ihre Privatsphäre vollständig gewahrt.",
+                g3_title: "🔄 3. Backup wiederherstellen",
+                g3_text: "Bei Browserwechsel oder Cache-Löschung wählen Sie Ihre JSON-Sicherheitskopie aus, um alle Einträge wiederherzustellen.",
+                g4_title: "🌐 4. Mehrsprachigkeit & Ästhetik",
+                g4_text: "Unterstützt sechs Sprachen. Wechseln Sie nahtlos und genießen Sie die minimalistische orientalische Ästhetik.",
+                copyright: "© 2026 Rui Palast. Alle Rechte vorbehalten. Unerlaubte kommerzielle Nutzung ist untersagt."
+            },
+            fr: {
+                title: "Humeur de Printemps",
+                editHint: "(Cliquez pour modifier le titre)",
+                subtitle: "Flux des Saisons·Trésors de la Plume",
+                openBtn: "Ouvrir le Livre",
+                indexTitle: "Catalogue & Trésors Passés",
+                closeBook: "Fermer la Couverture",
+                newDiary: "+ Écrire un Journal",
+                writeTitle: "Éclosion à la Plume",
+                backCatalog: "Retour au Catalogue",
+                backMonths: "← Retour aux mois",
+                stickerHint: "🌸 Autocollant floral appliqué",
+                toggleSticker: "Modifier l'autocollant",
+                stickerPick: "🌸 Choisir un autocollant (11 choix):",
+                stickerPos: "Coin:",
+                closePanel: "Terminer",
+                posTR: "Haut-Droit", posTL: "Haut-Gauche", posBR: "Bas-Droit", posBL: "Bas-Gauche",
+                defaultLocation: "Neubiberg",
+                defaultWeather: "Printemps · Ensoleillé 24°C",
+                placeholder: "Écrivez ici vos termes solaires et vos états d'âme...",
+                saveBtn: "Enregistrer",
+                deleteBtn: "Supprimer",
+                brandText: "—— Palais Rui ——",
+                emptyCatalog: "Le livre est vide. Cliquez sur '+ Écrire un Journal' pour commencer.",
+                alertDateContent: "Veuillez remplir la date et le contenu.",
+                alertExists: "Un journal pour cette date existe déjà.",
+                alertSuccess: "Enregistré avec succès dans le catalogue.",
+                confirmDelete: "Voulez-vous vraiment supprimer ce trésor ?",
+                monthEntriesUnit: count => `${count} entrées enregistrées`,
+                clickEnter: "Voir >",
+                exportBtn: "Exporter la sauvegarde",
+                importBtn: "Restaurer la sauvegarde",
+                backupSuccess: "Sauvegarde restaurée avec succès ! La page va se recharger.",
+                backupError: "Format de fichier invalide, impossible de restaurer la sauvegarde !",
+                guideTab: "Instructions",
+                guideTitle: "Instructions & Droits d'auteur",
+                g1_title: "🌸 1. Lecture et Écriture",
+                g1_text: "Cliquez sur « Ouvrir le Livre » pour accéder au catalogue. Consultez les trésors ou écrivez un nouveau journal.",
+                g2_title: "📥 2. Exporter (Confidentialité)",
+                g2_text: "Le bouton « Exporter » regroupe vos données dans un fichier JSON local. Vos données restent strictement privées.",
+                g3_title: "🔄 3. Restaurer la Sauvegarde",
+                g3_text: "En cas de changement de navigateur, sélectionnez votre fichier JSON de sauvegarde pour tout restaurer.",
+                g4_title: "🌐 4. Support Multilingue",
+                g4_text: "Prend en charge six langues tout en profitant d'une esthétique minimaliste.",
+                copyright: "© 2026 Palais Rui. Tous droits réservés. Reproduction commerciale interdite."
+            },
+            ru: {
+                title: "Весеннее Настроение",
+                editHint: "(Нажмите, чтобы изменить)",
+                subtitle: "Круговорот Сезонов·Сокровища Пера",
+                openBtn: "Открыть Книгу",
+                indexTitle: "Каталог и Прошлые Записи",
+                closeBook: "Закрыть Обложку",
+                newDiary: "+ Новая Запись",
+                writeTitle: "Письмо Цветов",
+                backCatalog: "Вернуться в Каталог",
+                backMonths: "← Назад к месяцам",
+                stickerHint: "🌸 Цветочная наклейка применена",
+                toggleSticker: "Изменить наклейку",
+                stickerPick: "🌸 Выберите наклейку (11 шт.):",
+                stickerPos: "Угол:",
+                closePanel: "Готово",
+                posTR: "Впр-Вв", posTL: "Вл-Вв", posBR: "Впр-Нж", posBL: "Вл-Нж",
+                defaultLocation: "Нойбиберг",
+                defaultWeather: "Весна · Солнечно 24°C",
+                placeholder: "Запишите здесь свои мысли и настроение...",
+                saveBtn: "Сохранить",
+                deleteBtn: "Удалить",
+                brandText: " Дворец Руй · Лин Си Цзянь ",
+                emptyCatalog: "Книга пуста. Нажмите «+ Новая Запись», чтобы начать.",
+                alertDateContent: "Пожалуйста, заполните дату и текст записи.",
+                alertExists: "Запись на эту дату уже существует.",
+                alertSuccess: "Успешно сохранено в каталог.",
+                confirmDelete: "Вы действительно хотите удалить эту запись?",
+                monthEntriesUnit: count => `Записей: ${count}`,
+                clickEnter: "Открыть >",
+                exportBtn: "Экспорт бэкапа",
+                importBtn: "Восстановить",
+                backupSuccess: "Резервная копия успешно восстановлена! Страница перезагрузится.",
+                backupError: "Неверный формат файла, не удалось восстановить резервную копию!",
+                guideTab: "Инструкция",
+                guideTitle: "Инструкция и Права",
+                g1_title: "🌸 1. Чтение и Записи",
+                g1_text: "Нажмите «Открыть Книгу» на обложке для входа в каталог. Просматривайте записи и создавайте новые.",
+                g2_title: "📥 2. Экспорт Бэкапа (Конфиденциальность)",
+                g2_text: "Кнопка «Экспорт бэкапа» сохраняет данные в локальный JSON-файл. Полная приватность и хранение на вашей стороне.",
+                g3_title: "🔄 3. Восстановление Бэкапа",
+                g3_text: "При смене браузера выберите прошлый файл бэкапа для мгновенного восстановления записей.",
+                g4_title: "🌐 4. Многоязычность",
+                g4_text: "Поддержка шести языков, наслаждаясь восточной минималистичной эстетикой.",
+                copyright: "© 2026 Дворец Руй. Все права защищены. Коммерческое использование запрещено."
+            },
+            es: {
+                title: "Humor de Primavera",
+                editHint: "(Haz clic para editar)",
+                subtitle: "Flujo de Estaciones·Tesoros de la Pluma",
+                openBtn: "Abrir Libro",
+                indexTitle: "Catálogo y Tesoros Pasados",
+                closeBook: "Cerrar Portada",
+                newDiary: "+ Escribir Diario",
+                writeTitle: "Trazando Flores",
+                backCatalog: "Volver al Catálogo",
+                backMonths: "← Volver a los meses",
+                stickerHint: "🌸 Pegatina floral aplicada",
+                toggleSticker: "Cambiar/Ajustar Pegatina",
+                stickerPick: "🌸 Seleccionar pegatina (11 opciones):",
+                stickerPos: "Esquina de la pegatina:",
+                closePanel: "Listo",
+                posTR: "Arr-Der", posTL: "Arr-Izq", posBR: "Abj-Der", posBL: "Abj-Izq",
+                defaultLocation: "Neubiberg",
+                defaultWeather: "Primavera · Soleado 24°C",
+                placeholder: "Escribe tus términos solares y estados de ánimo aquí...",
+                saveBtn: "Guardar",
+                deleteBtn: "Eliminar",
+                brandText: "—— Palacio Rui ——",
+                emptyCatalog: "El libro está en blanco. Haz clic en '+ Escribir Diario' arriba para comenzar.",
+                alertDateContent: "Por favor, rellena la fecha y el contenido del diario.",
+                alertExists: "Ya existe un diario para esta fecha.",
+                alertSuccess: "Registrado con éxito en el catálogo.",
+                confirmDelete: "¿Estás seguro de que quieres eliminar este tesoro?",
+                monthEntriesUnit: count => `${count} entradas registradas`,
+                clickEnter: "Ver >",
+                exportBtn: "Exportar copia",
+                importBtn: "Restaurar copia",
+                backupSuccess: "¡Copia de seguridad restaurada con éxito! La página se recargará.",
+                backupError: "¡Formato de archivo inválido, no se puede restaurar!",
+                guideTab: "Instrucciones",
+                guideTitle: "Instrucciones y Derechos",
+                g1_title: "🌸 1. Lectura y Escritura",
+                g1_text: "Haz clic en 'Abrir Libro' para entrar al catálogo. Explora tesoros pasados o escribe un nuevo diario.",
+                g2_title: "📥 2. Exportar Copia (Privacidad)",
+                g2_text: "El botón 'Exportar copia' guarda tus datos en un archivo JSON local. Tu privacidad está garantizada al 100%.",
+                g3_title: "🔄 3. Restaurar Copia",
+                g3_text: "Si cambias de navegador, selecciona tu archivo JSON anterior para restaurar todas tus entradas.",
+                g4_title: "🌐 4. Soporte Multilingüe",
+                g4_text: "Compatible con seis idiomas disfrutando de una estética oriental minimalista.",
+                copyright: "© 2026 Palacio Rui. Todos los derechos reservados. Prohibida su reproducción comercial."
+            }
+        };
+
+        let currentLang = 'zh';
+
+        function switchLanguage(lang) {
+            currentLang = lang;
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            updatePageTexts();
+        }
+
+        function toggleGuideDrawer() {
+            document.getElementById('guideDrawerPanel').classList.toggle('open');
+            document.getElementById('guideOverlay').classList.toggle('show');
+        }
+
+        function updatePageTexts() {
+            const t = translations[currentLang];
+            if (!t) return;
+
+            document.getElementById('coverTitle').innerText = t.title;
+            document.getElementById('editHintText').innerText = t.editHint;
+            document.getElementById('coverSubtitle').innerText = t.subtitle;
+            document.getElementById('btnOpenText').innerText = t.openBtn;
+            document.getElementById('indexTitleText').innerText = t.indexTitle;
+            document.getElementById('btnCloseBook').innerText = t.closeBook;
+            document.getElementById('btnNewDiary').innerText = t.newDiary;
+            document.getElementById('writePageTitle').innerText = t.writeTitle;
+            document.getElementById('btnBackCatalog').innerText = t.backCatalog;
+            document.getElementById('btnBackToMonths').innerText = t.backMonths;
+            document.getElementById('stickerStatusHint').innerText = t.stickerHint;
+            document.getElementById('btnToggleSticker').innerText = t.toggleSticker;
+            document.getElementById('labelStickerPick').innerText = t.stickerPick;
+            document.getElementById('labelStickerPos').innerText = t.stickerPos;
+            document.getElementById('btnCloseStickerPanel').innerText = t.closePanel;
+            document.getElementById('posTR').innerText = t.posTR;
+            document.getElementById('posTL').innerText = t.posTL;
+            document.getElementById('posBR').innerText = t.posBR;
+            document.getElementById('posBL').innerText = t.posBL;
+            document.getElementById('textareaContent').placeholder = t.placeholder;
+            document.getElementById('btnSaveRecord').innerText = t.saveBtn;
+            document.getElementById('btnDelete').innerText = t.deleteBtn;
+            document.getElementById('coverBrand').innerText = t.brandText;
+            document.getElementById('indexBrandText').innerText = t.brandText;
+            document.getElementById('writeBrandText').innerText = t.brandText;
+
+            document.getElementById('btnExportData').innerText = t.exportBtn;
+            document.getElementById('btnImportDataLabel').innerText = t.importBtn;
+
+            document.getElementById('guideTabLabel').innerText = t.guideTab;
+            document.getElementById('guideNavTitle').innerText = t.guideTitle;
+            document.getElementById('h2Title1').innerText = t.g1_title;
+            document.getElementById('pText1').innerText = t.g1_text;
+            document.getElementById('h2Title2').innerText = t.g2_title;
+            document.getElementById('pText2').innerText = t.g2_text;
+            document.getElementById('h2Title3').innerText = t.g3_title;
+            document.getElementById('pText3').innerText = t.g3_text;
+            document.getElementById('h2Title4').innerText = t.g4_title;
+            document.getElementById('pText4').innerText = t.g4_text;
+            document.getElementById('copyrightText').innerText = t.copyright;
+
+            if (!editingDate) {
+                const locInput = document.getElementById('inputLocation');
+                if (locInput) locInput.value = t.defaultLocation;
+                const weaInput = document.getElementById('inputWeather');
+                if (weaInput) weaInput.value = t.defaultWeather;
+            }
+
+            updatePoetryDisplay();
+            
+            if (currentViewingMonth) {
+                renderDateCatalog(currentViewingMonth);
+            } else {
+                renderMonthCatalog();
+            }
+        }
+
+        window.onload = function() {
+            initStickerThumbnails();
+            renderMonthCatalog();
+            goToPage('pageCover');
+        };
+
+        function toggleStickerToolbar() {
+            const panel = document.getElementById('stickerToolbarPanel');
+            panel.classList.toggle('show');
+        }
+
+        function initStickerThumbnails() {
+            const container = document.getElementById('stickerThumbnails');
+            container.innerHTML = flowerList.map((src, index) => `
+                <img src="${src}" class="sticker-thumb ${src === currentStickerSrc ? 'active' : ''}" onclick="selectStickerImage('${src}')" title="flower${index+1}" alt="flower${index+1}">
+            `).join('');
+        }
+
+        function selectStickerImage(src) {
+            currentStickerSrc = src;
+            document.querySelectorAll('.sticker-thumb').forEach(thumb => {
+                if(thumb.getAttribute('src') === src) {
+                    thumb.classList.add('active');
+                } else {
+                    thumb.classList.remove('active');
+                }
+            });
+            updateStickerDisplay();
+            document.getElementById('stickerToolbarPanel').classList.remove('show');
+        }
+
+        function setStickerPosition(pos) {
+            currentStickerPos = pos;
+            ['posTR', 'posTL', 'posBR', 'posBL'].forEach(id => document.getElementById(id).classList.remove('active'));
+            
+            if(pos === 'top-right') document.getElementById('posTR').classList.add('active');
+            if(pos === 'top-left') document.getElementById('posTL').classList.add('active');
+            if(pos === 'bottom-right') document.getElementById('posBR').classList.add('active');
+            if(pos === 'bottom-left') document.getElementById('posBL').classList.add('active');
+
+            updateStickerDisplay();
+            document.getElementById('stickerToolbarPanel').classList.remove('show');
+        }
+
+        function updateStickerDisplay() {
+            const sticker = document.getElementById('stickerImg');
+            sticker.style.display = 'block';
+            sticker.src = currentStickerSrc;
+            sticker.className = `corner-flower-sticker pos-${currentStickerPos}`;
+            sticker.style.transform = 'none';
+        }
+
+        function goToPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+
+            const sticker = document.getElementById('stickerImg');
+
+            if (pageId === 'pageCover') {
+                sticker.style.display = 'block';
+                sticker.src = 'image/flower1.jpg';
+                sticker.className = 'corner-flower-sticker pos-top-right';
+                sticker.style.width = '460px';
+                sticker.style.transform = 'none';
+            } else if (pageId === 'pageIndex') {
+                sticker.style.display = 'block';
+                sticker.src = 'image/flower11.jpg';
+                sticker.className = 'corner-flower-sticker';
+                sticker.style.bottom = '-35px';
+                sticker.style.right = '-35px';
+                sticker.style.width = '560px';
+                sticker.style.transform = 'none'; 
+                renderMonthCatalog();
+            }
+        }
+
+        function openNewDiary() {
+            editingDate = null;
+            const t = translations[currentLang];
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('inputDate').value = today;
+            document.getElementById('inputDate').disabled = false;
+            document.getElementById('inputLocation').value = t.defaultLocation;
+            document.getElementById('inputWeather').value = t.defaultWeather;
+            document.getElementById('textareaContent').value = "";
+            document.getElementById('stickerToolbarPanel').classList.remove('show');
+
+            setRandomPoetry();
+
+            currentStickerSrc = flowerList[Math.floor(Math.random() * flowerList.length)];
+            currentStickerPos = 'top-right';
+
+            initStickerThumbnails();
+            setStickerPosition('top-right');
+
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('pageWrite').classList.add('active');
+        }
+
+        function openExistingDiary(date) {
+            editingDate = date;
+            let entries = JSON.parse(localStorage.getItem('ruigong_princess_diaries') || '[]');
+            const target = entries.find(item => item.date === date);
+            
+            if(target) {
+                document.getElementById('inputDate').value = target.date;
+                document.getElementById('inputDate').disabled = true;
+                document.getElementById('inputLocation').value = target.location || translations[currentLang].defaultLocation;
+                document.getElementById('inputWeather').value = target.weather || '';
+                document.getElementById('textareaContent').value = target.content;
+                document.getElementById('stickerToolbarPanel').classList.remove('show');
+
+                if (target.poetryIndex !== undefined) {
+                    currentPoetryIndex = target.poetryIndex;
+                    updatePoetryDisplay();
+                } else if (target.poetry) {
+                    document.getElementById('poetryFooterText').innerText = target.poetry;
+                    currentPoetryIndex = -1;
+                } else {
+                    setRandomPoetry();
+                }
+
+                currentStickerSrc = target.stickerSrc || 'image/flower2.jpg';
+                currentStickerPos = target.stickerPos || 'top-right';
+
+                initStickerThumbnails();
+                setStickerPosition(currentStickerPos);
+
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                document.getElementById('pageWrite').classList.add('active');
+            }
+        }
+
+        function saveAndReturnIndex() {
+            const t = translations[currentLang];
+            const date = document.getElementById('inputDate').value;
+            const location = document.getElementById('inputLocation').value;
+            const weather = document.getElementById('inputWeather').value;
+            const content = document.getElementById('textareaContent').value;
+            const poetry = document.getElementById('poetryFooterText').innerText;
+
+            if (!date || !content) {
+                alert(t.alertDateContent);
+                return;
+            }
+
+            let entries = JSON.parse(localStorage.getItem('ruigong_princess_diaries') || '[]');
+            
+            if (editingDate) {
+                const idx = entries.findIndex(item => item.date === editingDate);
+                if(idx >= 0) {
+                    entries[idx].location = location;
+                    entries[idx].weather = weather;
+                    entries[idx].content = content;
+                    entries[idx].poetry = poetry;
+                    entries[idx].poetryIndex = currentPoetryIndex;
+                    entries[idx].stickerSrc = currentStickerSrc;
+                    entries[idx].stickerPos = currentStickerPos;
+                }
+            } else {
+                if(entries.some(item => item.date === date)) {
+                    alert(t.alertExists);
+                    return;
+                }
+                entries.push({ 
+                    date, 
+                    location,
+                    weather, 
+                    content,
+                    poetry,
+                    poetryIndex: currentPoetryIndex,
+                    stickerSrc: currentStickerSrc,
+                    stickerPos: currentStickerPos
+                });
+            }
+
+            entries.sort((a, b) => new Date(b.date) - new Date(a.date));
+            localStorage.setItem('ruigong_princess_diaries', JSON.stringify(entries));
+            alert(t.alertSuccess);
+
+            if (editingDate) {
+                currentViewingMonth = editingDate.substring(0, 7);
+                renderDateCatalog(currentViewingMonth);
+            } else {
+                currentViewingMonth = date.substring(0, 7);
+                renderDateCatalog(currentViewingMonth);
+            }
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('pageIndex').classList.add('active');
+        }
+
+        function deleteCurrentDiary() {
+            const t = translations[currentLang];
+            const dateToDelete = editingDate || document.getElementById('inputDate').value;
+            
+            if(!dateToDelete) return;
+
+            if(confirm(t.confirmDelete)) {
+                let entries = JSON.parse(localStorage.getItem('ruigong_princess_diaries') || '[]');
+                entries = entries.filter(item => item.date !== dateToDelete);
+                localStorage.setItem('ruigong_princess_diaries', JSON.stringify(entries));
+                
+                const month = dateToDelete.substring(0, 7);
+                editingDate = null;
+                
+                renderDateCatalog(month);
+                document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+                document.getElementById('pageIndex').classList.add('active');
+            }
+        }
+
+        function handleBackFromWrite() {
+            if (currentViewingMonth) {
+                renderDateCatalog(currentViewingMonth);
+            } else {
+                renderMonthCatalog();
+            }
+            goToPage('pageIndex');
+        }
+
+        function getLocalizedMonthName(year, month) {
+            const mIndex = parseInt(month) - 1;
+            if (currentLang === 'en') {
+                const names = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                return `${names[mIndex]} ${year}`;
+            } else if (currentLang === 'de') {
+                const names = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli", "August", "September", "Oktober", "November", "Dezember"];
+                return `${names[mIndex]} ${year}`;
+            } else if (currentLang === 'fr') {
+                const names = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"];
+                return `${names[mIndex]} ${year}`;
+            } else if (currentLang === 'ru') {
+                const names = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
+                return `${names[mIndex]} ${year}`;
+            } else if (currentLang === 'es') {
+                const names = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+                return `${names[mIndex]} de ${year}`;
+            }
+            return `${year}年 ${parseInt(month)}月`;
+        }
+
+        function renderMonthCatalog() {
+            currentViewingMonth = null;
+            document.getElementById('btnBackToMonths').style.display = 'none';
+            document.getElementById('currentMonthIndicator').innerText = '';
+
+            const t = translations[currentLang];
+            const catalogContainer = document.getElementById('catalogList');
+            let entries = JSON.parse(localStorage.getItem('ruigong_princess_diaries') || '[]');
+            
+            if (entries.length === 0) {
+                catalogContainer.innerHTML = `<div style="color: var(--sub-text); text-align: center; margin-top: 100px;">${t.emptyCatalog}</div>`;
+                return;
+            }
+
+            let monthsMap = {};
+            entries.forEach(e => {
+                if (e.date && e.date.length >= 7) {
+                    let m = e.date.substring(0, 7);
+                    if (!monthsMap[m]) monthsMap[m] = 0;
+                    monthsMap[m]++;
+                }
+            });
+
+            let sortedMonths = Object.keys(monthsMap).sort((a, b) => b.localeCompare(a));
+
+            catalogContainer.innerHTML = sortedMonths.map(m => {
+                let [year, month] = m.split('-');
+                let monthLabel = getLocalizedMonthName(year, month);
+
+                return `
+                    <div class="diary-catalog-item" onclick="renderDateCatalog('${m}')">
+                        <div class="catalog-date">🌸 ${monthLabel}</div>
+                        <div class="catalog-preview" style="color: var(--sub-text);">${t.monthEntriesUnit(monthsMap[m])}</div>
+                        <div style="font-size:0.85rem; color:var(--primary-color);">${t.clickEnter}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderDateCatalog(monthStr) {
+            currentViewingMonth = monthStr;
+            document.getElementById('btnBackToMonths').style.display = 'inline-block';
+            
+            let [year, month] = monthStr.split('-');
+            document.getElementById('currentMonthIndicator').innerText = getLocalizedMonthName(year, month);
+
+            const catalogContainer = document.getElementById('catalogList');
+            let entries = JSON.parse(localStorage.getItem('ruigong_princess_diaries') || '[]');
+            
+            let monthEntries = entries.filter(e => e.date && e.date.startsWith(monthStr));
+            monthEntries.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            catalogContainer.innerHTML = monthEntries.map(e => `
+                <div class="diary-catalog-item" onclick="openExistingDiary('${e.date}')">
+                    <div class="catalog-date">${e.date}</div>
+                    <div class="catalog-preview">${e.content}</div>
+                    <div style="font-size:0.85rem; color:var(--primary-color); min-width:90px; text-align:right;">${e.weather || ''}</div>
+                </div>
+            `).join('');
+        }
+
+        function exportDiaryData() {
+            const data = localStorage.getItem('ruigong_princess_diaries') || '[]';
+            const blob = new Blob([data], { type: 'application/json;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `LingXiJian_Backup_${new Date().toISOString().slice(0,10)}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function importDiaryData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const content = e.target.result;
+                    JSON.parse(content);
+                    localStorage.setItem('ruigong_princess_diaries', content);
+                    alert(translations[currentLang].backupSuccess);
+                    location.reload();
+                } catch (err) {
+                    alert(translations[currentLang].backupError);
+                }
+            };
+            reader.readAsText(file);
+        }
+// 注册 Service Worker 实现离线缓存
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+            .then(reg => {
+                console.log('Service Worker 注册成功:', reg.scope);
+            })
+            .catch(err => {
+                console.log('Service Worker 注册失败:', err);
+            });
+    });
+}
+    </script>
+</body>
+</html>
