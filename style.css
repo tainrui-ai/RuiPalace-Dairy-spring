@@ -32,3 +32,153 @@
     outline: none;
     margin: 0;
 }
+/* ================= 典雅古风密码弹窗样式 ================= */
+.password-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(42, 42, 42, 0.4);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 200;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.password-overlay.show {
+    display: flex;
+    opacity: 1;
+}
+
+.password-modal {
+    width: 100%;
+    max-width: 360px;
+    background-color: var(--bg-goose-yellow);
+    background-image: radial-gradient(circle at 50% 30%, rgba(255,255,255,0.6) 0%, rgba(247,242,227,0.95) 100%);
+    border: 1px solid var(--line-color);
+    padding: 35px 30px;
+    border-radius: 6px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+    text-align: center;
+    box-sizing: border-box;
+    font-family: inherit;
+}
+
+.password-modal-title {
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+
+.password-modal-subtitle {
+    font-size: 0.85rem;
+    color: var(--sub-text);
+    letter-spacing: 0.05em;
+    margin-bottom: 22px;
+}
+
+.password-input {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.7);
+    border: 1px solid var(--line-color);
+    padding: 10px 14px;
+    font-size: 1rem;
+    font-family: inherit;
+    color: var(--text-ink);
+    border-radius: 4px;
+    outline: none;
+    box-sizing: border-box;
+    text-align: center;
+    letter-spacing: 0.2em;
+    margin-bottom: 20px;
+    transition: all 0.2s;
+}
+
+.password-input:focus {
+    background: rgba(255, 255, 255, 1);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 8px rgba(42, 42, 42, 0.08);
+}
+
+.password-actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+}
+
+.password-btn-cancel {
+    background: rgba(255, 255, 255, 0.4);
+    border: 1px solid var(--line-color);
+    color: var(--sub-text);
+    padding: 8px 18px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.password-btn-cancel:hover {
+    background: rgba(255, 255, 255, 0.8);
+    color: var(--primary-color);
+}
+
+/* 遮罩层：确保默认隐藏，触发时居中显示 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  backdrop-filter: blur(2px);
+}
+
+/* 弹窗主体 */
+.modal-content {
+  background: #fdfbf7;
+  padding: 30px 24px;
+  width: 90%;
+  max-width: 380px;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  position: relative;
+  text-align: center;
+  border: 1px solid #e6e2d6;
+}
+
+/* 关闭按钮 */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  font-size: 22px;
+  color: #8c857b;
+  cursor: pointer;
+}
+
+/* 标题与文字 */
+.modal-title { font-size: 18px; color: #2c2a29; margin-bottom: 12px; }
+.modal-text { font-size: 14px; color: #595349; line-height: 1.6; margin-bottom: 24px; }
+.modal-confirm-btn {
+  background-color: #4a453d;
+  color: #fdfbf7;
+  border: none;
+  padding: 8px 24px;
+  border-radius: 4px;
+  cursor: pointer;
+}
