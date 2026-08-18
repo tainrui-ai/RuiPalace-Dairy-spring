@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>春天的心情 · 蕊宫 · </title>
+    <title>春天的心情 · 蕊宫</title>
 
     <style>
 :root {
@@ -32,7 +32,7 @@
         .book-sheet {
             width: 100%;
             max-width: 760px;
-            height: 1070px;
+            height: auto;
             background-color: var(--bg-goose-yellow) !important;
             background-image: 
                 radial-gradient(circle at 50% 30%, rgba(255,255,255,0.4) 0%, rgba(247,242,227,0.85) 100%),
@@ -96,7 +96,6 @@
             z-index: 20;
         }
         
-        /* 多语言按钮：未选中时颜色更淡、更统一 */
         .lang-btn {
             background: rgba(255, 255, 255, 0.35);
             border: 1px solid rgba(216, 206, 188, 0.6);
@@ -112,7 +111,6 @@
             background: rgba(255, 255, 255, 0.7);
             color: var(--primary-color);
         }
-        /* 选中状态：背景加深为稍深米色，文字沉稳突出 */
         .lang-btn.active {
             background: #E5DCC2;
             border-color: var(--primary-color);
@@ -146,7 +144,6 @@
             opacity: 0.6;
         }
 
-        /* 标题容器：悬停时显示可编辑提示与铅笔图标 */
         .cover-title-wrapper {
             display: inline-flex;
             flex-direction: column;
@@ -172,7 +169,6 @@
             margin: 0;
         }
 
-        /* 极淡的铅笔图标：默认隐藏/半透明，悬停时显现 */
         .edit-pencil-icon {
             font-size: 1.3rem;
             opacity: 0.25;
@@ -183,7 +179,6 @@
             transform: scale(1.1);
         }
 
-        /* 标题旁的小字提示 */
         .edit-hint-text {
             font-size: 0.8rem;
             color: var(--sub-text);
@@ -205,7 +200,6 @@
             margin-bottom: 40px;
         }
 
-        /* 首页“翻开书卷”按钮：透明磨砂质感 */
         .btn-open {
             background-color: rgba(255, 255, 255, 0.65);
             backdrop-filter: blur(6px);
@@ -439,7 +433,6 @@
         .poetry-footer:hover { opacity: 0.7; }
         .brand-footer { font-size: 0.85rem; color: var(--primary-color); letter-spacing: 0.03em; }
 
-        /* ================= 首页右侧拉出式书签：透明磨砂感 ================= */
         .guide-sidebar-tab {
             position: fixed;
             right: 0;
@@ -556,17 +549,12 @@
             margin: 0;
         }
     </style>
-
 </head>
 <body>
 
-    <!-- 首页右侧固定的古风透明磨砂书签 -->
     <div class="guide-sidebar-tab" onclick="toggleGuideDrawer()" id="guideTabLabel">使用说明</div>
-
-    <!-- 遮罩层 -->
     <div class="guide-drawer-overlay" id="guideOverlay" onclick="toggleGuideDrawer()"></div>
 
-    <!-- 右侧拉出式说明文档抽屉 -->
     <div class="guide-drawer" id="guideDrawerPanel">
         <div class="guide-drawer-header">
             <span class="guide-drawer-title" id="guideNavTitle">使用说明与版权指引</span>
@@ -594,7 +582,7 @@
             </div>
             
             <div style="margin-top: 15px; text-align: center; font-size: 0.75rem; color: var(--sub-text); line-height: 1.5;" id="copyrightText">
-                © 2026 蕊宫版权所有保留所有权利。未经授权，禁止任何形式的商业转载、改编或盗用。
+                © 2026 蕊宫·灵犀鉴 版权所有保留所有权利。未经授权，禁止任何形式的商业转载、改编或盗用。
             </div>
         </div>
     </div>
@@ -602,9 +590,7 @@
     <div class="book-sheet">
         <img src="" alt="花卉贴纸" class="corner-flower-sticker" id="stickerImg">
 
-        <!-- 第一页：固定封面 -->
         <div class="page cover-page active" id="pageCover">
-            <!-- 优化后的标题区域：带悬停铅笔图标与可修改提示 -->
             <div class="cover-title-wrapper" title="点击即可修改标题">
                 <div class="cover-title-row">
                     <h1 class="cover-title" id="coverTitle" contenteditable="true">春天的心情</h1>
@@ -617,26 +603,26 @@
             <button class="btn-open" id="btnOpenText" onclick="goToPage('pageIndex')">翻开书卷</button>
             
             <div class="lang-switcher-bottom">
-                <button class="lang-btn active" onclick="switchLanguage('zh')">中</button>
-                <button class="lang-btn" onclick="switchLanguage('en')">EN</button>
-                <button class="lang-btn" onclick="switchLanguage('de')">DE</button>
-                <button class="lang-btn" onclick="switchLanguage('fr')">FR</button>
-                <button class="lang-btn" onclick="switchLanguage('ru')">RU</button>
-                <button class="lang-btn" onclick="switchLanguage('es')">ES</button>
+                <button class="lang-btn active" onclick="switchLanguage('zh', this)">中</button>
+                <button class="lang-btn" onclick="switchLanguage('en', this)">EN</button>
+                <button class="lang-btn" onclick="switchLanguage('de', this)">DE</button>
+                <button class="lang-btn" onclick="switchLanguage('fr', this)">FR</button>
+                <button class="lang-btn" onclick="switchLanguage('ru', this)">RU</button>
+                <button class="lang-btn" onclick="switchLanguage('es', this)">ES</button>
             </div>
 
-            <!-- 首页优雅极简的备份与恢复入口 -->
             <div class="elegant-backup-bar">
                 <button class="elegant-link" onclick="exportDiaryData()" id="btnExportData">导出备份</button>
                 <span>·</span>
                 <label for="importFile" class="elegant-link" id="btnImportDataLabel" style="cursor: pointer;">恢复备份</label>
                 <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importDiaryData(event)">
+                <span>·</span>
+                <button class="elegant-link" id="saveButton">绑定本地手稿</button>
             </div>
             
             <div style="margin-top: 20px; font-size: 0.9rem; color: var(--primary-color); letter-spacing: 0.25em;" id="coverBrand">—— 蕊宫 ——</div>
         </div>
 
-        <!-- 第二页：目录页 -->
         <div class="page" id="pageIndex">
             <div class="page-nav">
                 <span class="nav-title" id="indexTitleText">目录与过往藏珍</span>
@@ -652,7 +638,6 @@
             <div style="text-align: center; font-size: 0.85rem; color: var(--primary-color); letter-spacing: 0.15em; margin-top: 10px;" id="indexBrandText">—— 蕊宫 ——</div>
         </div>
 
-        <!-- 第三页：写作/详情页 -->
         <div class="page" id="pageWrite">
             <div class="page-nav">
                 <span class="nav-title" id="writePageTitle">落笔生花</span>
@@ -666,7 +651,7 @@
 
             <div class="sticker-toolbar" id="stickerToolbarPanel">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                    <span id="labelStickerPick" style="font-weight: 600;">🌸 选择贴纸（11款）：</span>
+                    <span id="labelStickerPick" style="font-weight: 600;">🌸 选择贴纸：</span>
                     <button class="btn-link" onclick="toggleStickerToolbar()" id="btnCloseStickerPanel" style="font-size: 0.8rem;">完成/收起</button>
                 </div>
                 <div class="sticker-options" id="stickerThumbnails"></div>
@@ -698,14 +683,13 @@
         </div>
     </div>
 
-
-
     <script>
         let editingDate = null;
         let currentViewingMonth = null; 
         let currentStickerSrc = 'image/flower1.jpg';
         let currentStickerPos = 'top-right';
         let currentPoetryIndex = 0; 
+        let fileHandle = null; // 本地文件关联句柄
 
         const flowerList = [
             'image/flower1.jpg', 'image/flower2.jpg', 'image/flower3.jpg', 'image/flower4.jpg',
@@ -737,78 +721,6 @@
                 fr: "“Deux ou trois branches de pêcher derrière les bambous, les canards sentent les premiers la chaleur de l'eau.”",
                 ru: "“Две-три ветки персика за бамбуком, утки первыми узнают тепло весенней реки.”",
                 es: "“Dos o tres ramas de durazno fuera del bambú, los patos son los primeros en conocer la calidez del río.”"
-            },
-            {
-                zh: "“草长莺飞二月天，拂堤杨柳醉春烟。”",
-                en: "“Grass grows and orioles fly in the second month, weeping willows brush the banks, drunk in spring mist.”",
-                de: "“Gras wächst und Pirole fliegen im zweiten Monat, Trauerweiden streifen die Ufer, trunken im Frühlingsnebel.”",
-                fr: "“L'herbe pousse et les loriots volent au 2ème mois, les saules frôlent les rives, ivres de brume.”",
-                ru: "“Трава растет и иволги летают, плакучие ивы касаются берегов, пьяные от весеннего тумана.”",
-                es: "“La hierba crece y los oropéndolas vuelan en el segundo mes, los sauces rozan las orillas, borrachos de bruma primaveral.”"
-            },
-            {
-                zh: "“春色满园关不住，一枝红杏出墙来。”",
-                en: "“Spring's beauty fills the garden and cannot be contained; a red apricot branch reaches over the wall.”",
-                de: "“Die Frühlingspracht lässt sich nicht einsperren; ein Zweig roter Aprikose ragt über die Mauer.”",
-                fr: "“Le printemps remplit le jardin et ne peut être contenu ; une branche d'abricotier dépasse du mur.”",
-                ru: "“Весну в саду не удержать; ветка красного абрикоса тянется через стену.”",
-                es: "“La belleza de la primavera llena el jardín y no se puede contener; una rama de albaricoque rojo se asoma por encima de la pared.”"
-            },
-            {
-                zh: "“迟日江山丽，春风花草香。”",
-                en: "“Spring days are long and the landscape beautiful; the spring breeze brings the fragrance of flowers.”",
-                de: "“Die Frühlingstage sind lang und die Landschaft schön, der Frühlingswind bringt den Duft von Blumen.”",
-                fr: "“Les jours sont longs et le paysage est beau, la brise printanière apporte le parfum des fleurs.”",
-                ru: "“Весенние дни длинны и пейзаж прекрасен, весенний ветер приносит аромат цветов.”",
-                es: "“Los días de primavera son largos y el paisaje hermoso; la brisa primaveral trae la fragancia de las flores.”"
-            },
-            {
-                zh: "“随风潜入夜，润物细无声。”",
-                en: "“Slipping into the night with the wind, it moistens everything softly and silently.”",
-                de: "“Mit dem Wind schlüpft er in die Nacht, er befeuchtet alles sanft und lautlos.”",
-                fr: "“Se glissant dans la nuit avec le vent, elle humidifie tout doucement et en silence.”",
-                ru: "“Проскальзывая в ночь с ветром, он увлажняет всё мягко и беззвучно.”",
-                es: "“Deslizándose en la noche con el viento, humedece todo suave y silenciosamente.”"
-            },
-            {
-                zh: "“知否，知否？应是绿肥红瘦。”",
-                en: "“Do you know? It should be that the green leaves are plump and the red flowers are thin.”",
-                de: "“Weißt du? Es sollte sein, dass die grünen Blätter üppig und die roten Blumen welk sind.”",
-                fr: "“Sais-tu ? Il devrait en être ainsi : les feuilles vertes sont charnues et les fleurs rouges minces.”",
-                ru: "“Знаешь ли ты? Должно быть так, что зеленые листья полны, а красные цветы тонки.”",
-                es: "“¿Sabes? Debería ser que las hojas verdes están llenas y las flores rojas delgadas.”"
-            },
-            {
-                zh: "“莫听穿林打叶声，何妨吟啸且徐行。”",
-                en: "“Listen not to rain beating against trees; why not sing and walk slowly?”",
-                de: "“Hör nicht auf den Regen an den Bäumen; warum nicht singen und langsam gehen?”",
-                fr: "“N'écoutez pas la pluie battre contre les arbres ; pourquoi ne pas chanter et marcher lentement ?”",
-                ru: "“Не слушай шум дождя по деревьям; почему бы не петь и не идти медленно?”",
-                es: "“No escuches la lluvia golpeando los árboles; ¿por qué no cantar y caminar despacio?”"
-            },
-            {
-                zh: "“人面不知何处去，桃花依旧笑春风。”",
-                en: "“I know not where that face has gone; peach blossoms still smile in the spring breeze.”",
-                de: "“Ich weiß nicht, wohin dieses Gesicht verschwand; Pfirsichblüten lächeln noch immer im Frühlingswind.”",
-                fr: "“Je ne sais où ce visage est allé ; les fleurs de pêcher sourient toujours dans la brise.”",
-                ru: "“Не знаю, куда ушло это лицо; цветы персика всё ещё улыбаются весеннему ветру.”",
-                es: "“No sé a dónde se ha ido ese rostro; las flores de durazno aún sonríen en la brisa de primavera.”"
-            },
-            {
-                zh: "“杨柳阴阴细雨晴，残花落尽见流莺。”",
-                en: "“Willows offer deep shade as fine rain clears; with faded flowers gone, wandering orioles appear.”",
-                de: "“Weiden spenden tiefen Schatten nach dem Regen; wenn verblühte Blumen fallen, erscheinen Pirole.”",
-                fr: "“Les saules offrent une ombre après la pluie ; avec les fleurs fanées tombées, les loriots apparaissent.”",
-                ru: "“Ивы дают густую тень после дождя; когда опали увядшие цветы, появляются иволги.”",
-                es: "“Los sauces ofrecen sombra profunda cuando la lluvia aclara; con las flores marchitas caídas, aparecen las oropéndolas.”"
-            },
-            {
-                zh: "“最是一年春好处，绝胜烟柳满皇州。”",
-                en: "“This is the best time of spring, far surpassing the smoky willows that fill the capital.”",
-                de: "“Dies ist die beste Frühlingszeit, weit besser als die rauchigen Weiden der Hauptstadt.”",
-                fr: "“C'est la meilleure période du printemps, dépassant de loin les saules enfumés de la capitale.”",
-                ru: "“Это лучшее время весны, намного превосходящее дымчатые ивы столицы.”",
-                es: "“Este es el mejor momento de la primavera, superando con creces a los sauces ahumados que llenan la capital.”"
             }
         ];
 
@@ -837,7 +749,7 @@
                 backMonths: "← 返回月份目录",
                 stickerHint: "🌸 当前已贴上精致花卉装饰",
                 toggleSticker: "更换/调整贴纸",
-                stickerPick: "🌸 选择贴纸（11款）：",
+                stickerPick: "🌸 选择贴纸：",
                 stickerPos: "贴纸角位：",
                 closePanel: "完成/收起",
                 posTR: "右上", posTL: "左上", posBR: "右下", posBL: "左下",
@@ -856,6 +768,8 @@
                 clickEnter: "点击进入 >",
                 exportBtn: "导出备份",
                 importBtn: "恢复备份",
+                bindLocalFile: "绑定本地手稿",
+                bindMsg: "本地手稿连接已建立，所有书写将自动持久化。",
                 backupSuccess: "备份恢复成功！页面即将刷新。",
                 backupError: "文件格式错误，无法恢复备份！",
                 guideTab: "使用说明",
@@ -868,12 +782,12 @@
                 g3_text: "若更换了浏览器、设备或清除过本地缓存，可点击首页底部的“恢复备份”按钮，选择以往导出的 JSON 备份文件即可一键还原全部日记内容。",
                 g4_title: "🌐 4. 多语言支持与交互体验",
                 g4_text: "本站完美支持中、英、德、法、俄、西六种语言。切换语言后，使用说明及整站文案将同步无缝转换。排版与交互设计均充分契合东方式极简美学。",
-                copyright: "© 2026 蕊宫版权所有保留所有权利。未经授权，禁止任何形式的商业转载、改编或盗用。"
+                copyright: "© 2026 蕊宫·灵犀鉴 版权所有保留所有权利。未经授权，禁止任何形式的商业转载、改编或盗用。"
             },
             en: {
                 title: "Spring Mood",
                 editHint: "(Click title to edit)",
-                subtitle: "Seasons Flow · Treasures in Pen",
+                subtitle: "—— Seasons Flow · Treasures in Pen ——",
                 openBtn: "Open Book",
                 indexTitle: "Catalog & Past Treasures",
                 closeBook: "Close Cover",
@@ -883,234 +797,256 @@
                 backMonths: "← Back to Months",
                 stickerHint: "🌸 Floral sticker applied",
                 toggleSticker: "Change/Adjust Sticker",
-                stickerPick: "🌸 Select Sticker (11 items):",
+                stickerPick: "🌸 Select Sticker:",
                 stickerPos: "Sticker Corner:",
                 closePanel: "Done",
-                posTR: "TR", posTL: "TL", posBR: "BR", posBL: "BL",
+                posTR: "Top-Right", posTL: "Top-Left", posBR: "Bottom-Right", posBL: "Bottom-Left",
                 defaultLocation: "Neubiberg",
                 defaultWeather: "Spring · Sunny 24°C",
                 placeholder: "Write down your solar terms and moods here...",
                 saveBtn: "Save & Record",
                 deleteBtn: "Delete Entry",
                 brandText: "—— Rui Palace ——",
-                emptyCatalog: "The book is blank. Click '+ Write New Diary' above to start your first page.",
+                emptyCatalog: "The book is blank. Click '+ Write New Diary' above to start.",
                 alertDateContent: "Please fill in the date and diary content.",
-                alertExists: "A diary for this date already exists. Please edit it directly from the catalog.",
+                alertExists: "A diary for this date already exists.",
                 alertSuccess: "Successfully recorded into Rui Palace catalog.",
                 confirmDelete: "Are you sure you want to delete this treasure?",
-                monthEntriesUnit: count => `${count} entries recorded`,
+                monthEntriesUnit: count => `${count} spring entries recorded`,
                 clickEnter: "View >",
                 exportBtn: "Export Backup",
                 importBtn: "Restore Backup",
-                backupSuccess: "Backup restored successfully! The page will reload.",
+                bindLocalFile: "Bind Local Manuscript",
+                bindMsg: "File connection established! All writings will be automatically persisted.",
+                backupSuccess: "Backup restored successfully! Page is refreshing.",
                 backupError: "Invalid file format, cannot restore backup!",
                 guideTab: "Instructions",
-                guideTitle: "Instructions & Copyright Guide",
+                guideTitle: "Instructions & Copyright",
                 g1_title: "🌸 1. Reading & Writing Diaries",
                 g1_text: "Click 'Open Book' on the cover to enter the catalog. View past treasures by month or click '+ Write New Diary'. Change floral stickers, adjust corners, and click the poetry footer for multilingual spring verses.",
                 g2_title: "📥 2. Export Backup (Local Storage & Privacy)",
-                g2_text: "The 'Export Backup' button packages your diary data into a local JSON file. Powered by pure frontend local storage, your data remains entirely in your hands with absolute privacy.",
+                g2_text: "The 'Export Backup' button packages your diary data into a local JSON file. Powered by pure frontend local storage, your data remains entirely in your hands with absolute privacy. Regular backups are recommended.",
                 g3_title: "🔄 3. Restore Backup",
-                g3_text: "If you change browsers or clear cache, click 'Restore Backup' and select your previous JSON backup file to restore all entries instantly.",
-                g4_title: "🌐 4. Multilingual & Aesthetics",
-                g4_text: "Supports Chinese, English, German, French, Russian, and Spanish. Seamlessly switch languages while enjoying minimalist oriental aesthetics.",
-                copyright: "© 2026 Rui Palace. All rights reserved. Unauthorized commercial reproduction or adaptation is prohibited."
+                g3_text: "If you change browsers, devices, or clear cache, click 'Restore Backup' and select your previous JSON backup file to restore all entries instantly.",
+                g4_title: "🌐 4. Multilingual Support",
+                g4_text: "Supports Chinese, English, German, French, Russian, and Spanish. Switching languages seamlessly translates all site text while embracing minimalist oriental aesthetics.",
+                copyright: "© 2026 Rui Palace · Ling Xi Jian. All rights reserved. Unauthorized commercial reproduction or adaptation is prohibited."
             },
             de: {
                 title: "Frühlingsstimmung",
                 editHint: "(Titel zum Bearbeiten anklicken)",
-                subtitle: "Jahreszeiten im Fluss · Schätze der Feder",
+                subtitle: "Jahreszeiten im Fluss · Kostbarkeiten der Feder",
                 openBtn: "Buch öffnen",
                 indexTitle: "Katalog & Vergangene Schätze",
                 closeBook: "Umschlag schließen",
                 newDiary: "+ Neues Tagebuch",
-                writeTitle: "Blüten schreiben",
+                writeTitle: "Blühende Zeilen",
                 backCatalog: "Zurück zum Katalog",
-                backMonths: "← Zurück zu Monaten",
-                stickerHint: "🌸 Blumenaufkleber angebracht",
-                toggleSticker: "Aufkleber ändern",
-                stickerPick: "🌸 Aufkleber wählen (11 Stk.):",
-                stickerPos: "Ecke:",
-                closePanel: "Fertig",
+                backMonths: "← Zurück zu den Monaten",
+                stickerHint: "🌸 Filigraner Blumenaufkleber angebracht",
+                toggleSticker: "Aufkleber wechseln/anpassen",
+                stickerPick: "🌸 Aufkleber wählen:",
+                stickerPos: "Aufkleber-Ecke:",
+                closePanel: "Fertig / Schließen",
                 posTR: "Oben-Rechts", posTL: "Oben-Links", posBR: "Unten-Rechts", posBL: "Unten-Links",
                 defaultLocation: "Neubiberg",
                 defaultWeather: "Frühling · Sonnig 24°C",
-                placeholder: "Schreiben Sie hier Ihre Jahreszeiten und Stimmungen auf...",
+                placeholder: "Schreiben Sie hier Ihre Gedanken und Jahreszeiten nieder...",
                 saveBtn: "Speichern",
-                deleteBtn: "Löschen",
+                deleteBtn: "Eintrag löschen",
                 brandText: "—— Rui Palast ——",
-                emptyCatalog: "Das Buch ist leer. Klicken Sie oben auf „Neues Tagebuch“, um zu beginnen.",
-                alertDateContent: "Bitte füllen Sie Datum und Tagebuchinhalt aus.",
-                alertExists: "Ein Tagebuch für dieses Datum existiert bereits.",
-                alertSuccess: "Erfolgreich im Katalog gespeichert.",
+                emptyCatalog: "Das Buch ist noch leer. Klicken Sie oben auf „Neues Tagebuch“, um die erste Seite zu beginnen.",
+                alertDateContent: "Bitte füllen Sie Datum und Inhalt aus.",
+                alertExists: "Ein Eintrag für dieses Datum existiert bereits. Bitte bearbeiten Sie ihn direkt im Katalog.",
+                alertSuccess: "Erfolgreich in den Rui-Palast-Katalog aufgenommen.",
                 confirmDelete: "Möchten Sie diesen Schatz wirklich löschen?",
-                monthEntriesUnit: count => `${count} Einträge`,
-                clickEnter: "Öffnen >",
+                monthEntriesUnit: count => `${count} FrühlingsEinträge vorhanden`,
+                clickEnter: "Anzeigen >",
                 exportBtn: "Backup exportieren",
                 importBtn: "Backup wiederherstellen",
-                backupSuccess: "Backup erfolgreich wiederhergestellt! Die Seite wird neu geladen.",
+                bindLocalFile: "Lokales Manuskript binden",
+                bindMsg: "Verbindung zum lokalen Manuskript hergestellt. Alle Änderungen werden automatisch gespeichert.",
+                backupSuccess: "Backup erfolgreich wiederhergestellt! Die Seite wird aktualisiert.",
                 backupError: "Ungültiges Dateiformat, Backup konnte nicht wiederhergestellt werden!",
                 guideTab: "Anleitung",
-                guideTitle: "Anleitung & Urheberrecht",
-                g1_title: "🌸 1. Lesen & Tagebuch schreiben",
-                g1_text: "Klicken Sie auf „Buch öffnen“, um den Katalog aufzurufen. Betrachten Sie Schätze nach Monat oder schreiben Sie ein neues Tagebuch.",
-                g2_title: "📥 2. Backup exportieren (Datenschutz)",
-                g2_text: "Die Schaltfläche „Backup exportieren“ speichert alle Daten lokal als JSON. Dank reiner Frontend-Speicherung bleibt Ihre Privatsphäre vollständig gewahrt.",
+                guideTitle: "Bedienungsanleitung & Urheberrecht",
+                g1_title: "🌸 1. Blättern & Tagebuch schreiben",
+                g1_text: "Klicken Sie auf der Startseite auf „Buch öffnen“, um zum Katalog zu gelangen. Sie können vergangene Schätze nach Monat einsehen oder über „Neues Tagebuch“ aktuelle Stimmungen festhalten. Passen Sie Blumensticker und Ecken flexibel an.",
+                g2_title: "📥 2. Backup exportieren (Lokaler Speicher & Datenschutz)",
+                g2_text: "Über den Button „Backup exportieren“ können Sie alle Tagebucheindrücke als lokale JSON-Datei sichern. Dank reinem Frontend-Speicher (LocalStorage) bleibt Ihre absolute Privatsphäre gewahrt.",
                 g3_title: "🔄 3. Backup wiederherstellen",
-                g3_text: "Bei Browserwechsel oder Cache-Löschung wählen Sie Ihre JSON-Sicherheitskopie aus, um alle Einträge wiederherzustellen.",
-                g4_title: "🌐 4. Mehrsprachigkeit & Ästhetik",
-                g4_text: "Unterstützt sechs Sprachen. Wechseln Sie nahtlos und genießen Sie die minimalistische orientalische Ästhetik.",
-                copyright: "© 2026 Rui Palast. Alle Rechte vorbehalten. Unerlaubte kommerzielle Nutzung ist untersagt."
+                g3_text: "Bei Browserwechsel oder Cache-Löschung können Sie über „Backup wiederherstellen“ Ihre JSON-Datei hochladen, um alle Einträge sofort wiederherzustellen.",
+                g4_title: "🌐 4. Mehrsprachigkeit & Interaktion",
+                g4_text: "Die Website unterstützt vollständig sechs Sprachen (Chinesisch, Englisch, Deutsch, Französisch, Russisch, Spanisch). Die Texte passen sich nach Sprachwechsel nahtlos an.",
+                copyright: "© 2026 Rui Palast · Ling Xi Jian. Alle Rechte vorbehalten. Unerlaubte kommerzielle Nutzung untersagt."
             },
             fr: {
                 title: "Humeur de Printemps",
                 editHint: "(Cliquez pour modifier le titre)",
-                subtitle: "Flux des Saisons·Trésors de la Plume",
+                subtitle: "Flux des Saisons · Trésors de la Plume",
                 openBtn: "Ouvrir le Livre",
                 indexTitle: "Catalogue & Trésors Passés",
                 closeBook: "Fermer la Couverture",
-                newDiary: "+ Écrire un Journal",
-                writeTitle: "Éclosion à la Plume",
+                newDiary: "+ Nouveau Journal",
+                writeTitle: "Écrire en Fleurs",
                 backCatalog: "Retour au Catalogue",
-                backMonths: "← Retour aux mois",
-                stickerHint: "🌸 Autocollant floral appliqué",
-                toggleSticker: "Modifier l'autocollant",
-                stickerPick: "🌸 Choisir un autocollant (11 choix):",
-                stickerPos: "Coin:",
-                closePanel: "Terminer",
-                posTR: "Haut-Droit", posTL: "Haut-Gauche", posBR: "Bas-Droit", posBL: "Bas-Gauche",
+                backMonths: "← Retour aux Mois",
+                stickerHint: "🌸 Décoration florale appliquée",
+                toggleSticker: "Changer / Ajuster l'autocollant",
+                stickerPick: "🌸 Choisir un autocollant :",
+                stickerPos: "Position du coin :",
+                closePanel: "Terminé",
+                posTR: "Haut-Droite", posTL: "Haut-Gauche", posBR: "Bas-Droite", posBL: "Bas-Gauche",
                 defaultLocation: "Neubiberg",
                 defaultWeather: "Printemps · Ensoleillé 24°C",
-                placeholder: "Écrivez ici vos termes solaires et vos états d'âme...",
+                placeholder: "Écrivez ici vos impressions et termes solaires...",
                 saveBtn: "Enregistrer",
                 deleteBtn: "Supprimer",
                 brandText: "—— Palais Rui ——",
-                emptyCatalog: "Le livre est vide. Cliquez sur '+ Écrire un Journal' pour commencer.",
+                emptyCatalog: "Le livre est encore vide. Cliquez ci-dessus sur « Nouveau Journal » pour commencer.",
                 alertDateContent: "Veuillez remplir la date et le contenu.",
-                alertExists: "Un journal pour cette date existe déjà.",
-                alertSuccess: "Enregistré avec succès dans le catalogue.",
-                confirmDelete: "Voulez-vous vraiment supprimer ce trésor ?",
-                monthEntriesUnit: count => `${count} entrées enregistrées`,
+                alertExists: "Un journal existe déjà pour cette date. Modifiez-le directement dans le catalogue.",
+                alertSuccess: "Enregistré avec succès dans le catalogue du Palais Rui.",
+                confirmDelete: "Êtes-vous sûr de vouloir supprimer ce trésor ?",
+                monthEntriesUnit: count => `${count} entrées de printemps enregistrées`,
                 clickEnter: "Voir >",
                 exportBtn: "Exporter la sauvegarde",
                 importBtn: "Restaurer la sauvegarde",
-                backupSuccess: "Sauvegarde restaurée avec succès ! La page va se recharger.",
-                backupError: "Format de fichier invalide, impossible de restaurer la sauvegarde !",
-                guideTab: "Instructions",
-                guideTitle: "Instructions & Droits d'auteur",
+                bindLocalFile: "Lier le manuscrit local",
+                bindMsg: "Connexion au manuscrit établie. Toutes les modifications seront enregistrées automatiquement.",
+                backupSuccess: "Sauvegarde restaurée avec succès ! Actualisation en cours.",
+                backupError: "Format de fichier invalide, échec de la restauration !",
+                guideTab: "Guide",
+                guideTitle: "Instructions & Droits d'Auteur",
                 g1_title: "🌸 1. Lecture et Écriture",
-                g1_text: "Cliquez sur « Ouvrir le Livre » pour accéder au catalogue. Consultez les trésors ou écrivez un nouveau journal.",
-                g2_title: "📥 2. Exporter (Confidentialité)",
-                g2_text: "Le bouton « Exporter » regroupe vos données dans un fichier JSON local. Vos données restent strictement privées.",
+                g1_text: "Cliquez sur « Ouvrir le Livre » pour accéder au catalogue. Consultez les notes par mois ou créez un nouveau journal. Personnalisez les autocollants floraux à volonté.",
+                g2_title: "📥 2. Exporter la Sauvegarde (Confidentialité)",
+                g2_text: "Le bouton d'exportation rassemble vos données dans un fichier JSON local. Vos écrits restent entièrement sous votre contrôle grâce au stockage frontal pur.",
                 g3_title: "🔄 3. Restaurer la Sauvegarde",
-                g3_text: "En cas de changement de navigateur, sélectionnez votre fichier JSON de sauvegarde pour tout restaurer.",
+                g3_text: "En cas de changement d'appareil ou de nettoyage du cache, importez votre fichier JSON pour restaurer instantanément l'ensemble de vos journaux.",
                 g4_title: "🌐 4. Support Multilingue",
-                g4_text: "Prend en charge six langues tout en profitant d'une esthétique minimaliste.",
-                copyright: "© 2026 Palais Rui. Tous droits réservés. Reproduction commerciale interdite."
+                g4_text: "Compatible avec six langues de manière fluide. Le design épouse harmonieusement l'esthétique minimaliste orientale.",
+                copyright: "© 2026 Palais Rui · Ling Xi Jian. Tous droits réservés. Reproduction commerciale interdite."
             },
             ru: {
                 title: "Весеннее Настроение",
-                editHint: "(Нажмите, чтобы изменить)",
-                subtitle: "Круговорот Сезонов·Сокровища Пера",
+                editHint: "(Нажмите, чтобы изменить название)",
+                subtitle: "Круговорот Сезонов · Сокровища Пера",
                 openBtn: "Открыть Книгу",
                 indexTitle: "Каталог и Прошлые Записи",
                 closeBook: "Закрыть Обложку",
                 newDiary: "+ Новая Запись",
-                writeTitle: "Письмо Цветов",
-                backCatalog: "Вернуться в Каталог",
-                backMonths: "← Назад к месяцам",
-                stickerHint: "🌸 Цветочная наклейка применена",
-                toggleSticker: "Изменить наклейку",
-                stickerPick: "🌸 Выберите наклейку (11 шт.):",
-                stickerPos: "Угол:",
+                writeTitle: "Цветущие Строки",
+                backCatalog: "Назад к Каталогу",
+                backMonths: "← Назад к Месяцам",
+                stickerHint: "🌸 Цветочная наклейка добавлена",
+                toggleSticker: "Сменить / Настроить наклейку",
+                stickerPick: "🌸 Выберите наклейку:",
+                stickerPos: "Угол размещения:",
                 closePanel: "Готово",
-                posTR: "Впр-Вв", posTL: "Вл-Вв", posBR: "Впр-Нж", posBL: "Вл-Нж",
+                posTR: "Вверху-Справа", posTL: "Вверху-Слева", posBR: "Внизу-Справа", posBL: "Внизу-Слева",
                 defaultLocation: "Нойбиберг",
                 defaultWeather: "Весна · Солнечно 24°C",
-                placeholder: "Запишите здесь свои мысли и настроение...",
+                placeholder: "Пишите здесь свои мысли и настроения...",
                 saveBtn: "Сохранить",
-                deleteBtn: "Удалить",
-                brandText: " Дворец Руй · Лин Си Цзянь ",
-                emptyCatalog: "Книга пуста. Нажмите «+ Новая Запись», чтобы начать.",
-                alertDateContent: "Пожалуйста, заполните дату и текст записи.",
-                alertExists: "Запись на эту дату уже существует.",
-                alertSuccess: "Успешно сохранено в каталог.",
-                confirmDelete: "Вы действительно хотите удалить эту запись?",
-                monthEntriesUnit: count => `Записей: ${count}`,
-                clickEnter: "Открыть >",
+                deleteBtn: "Удалить запись",
+                brandText: "Дворец Руй · Лин Си Цзянь",
+                emptyCatalog: "Книга пока пуста. Нажмите «Новая Запись», чтобы начать первую страницу.",
+                alertDateContent: "Пожалуйста, заполните дату и текст дневника.",
+                alertExists: "Запись на эту дату уже существует. Отредактируйте её в каталоге.",
+                alertSuccess: "Успешно записано в каталог Дворца Руй.",
+                confirmDelete: "Вы уверены, что хотите удалить эту сокровищницу?",
+                monthEntriesUnit: count => `Записано весенних страниц: ${count}`,
+                clickEnter: "Смотреть >",
                 exportBtn: "Экспорт бэкапа",
-                importBtn: "Восстановить",
-                backupSuccess: "Резервная копия успешно восстановлена! Страница перезагрузится.",
-                backupError: "Неверный формат файла, не удалось восстановить резервную копию!",
-                guideTab: "Инструкция",
-                guideTitle: "Инструкция и Права",
-                g1_title: "🌸 1. Чтение и Записи",
-                g1_text: "Нажмите «Открыть Книгу» на обложке для входа в каталог. Просматривайте записи и создавайте новые.",
+                importBtn: "Импорт бэкапа",
+                bindLocalFile: "Привязать рукопись",
+                bindMsg: "Связь с локальным файлом установлена. Все записи сохраняются автоматически.",
+                backupSuccess: "Бэкап успешно восстановлен! Страница обновляется.",
+                backupError: "Неверный формат файла, не удалось восстановить бэкап!",
+                guideTab: "Справка",
+                guideTitle: "Инструкция и Авторские Права",
+                g1_title: "🌸 1. Чтение и Написание Дневника",
+                g1_text: "Нажмите «Открыть Книгу» для входа в каталог. Просматривайте архив по месяцам или создавайте новые записи. Меняйте цветочные стикеры и настраивайте их положение.",
                 g2_title: "📥 2. Экспорт Бэкапа (Конфиденциальность)",
-                g2_text: "Кнопка «Экспорт бэкапа» сохраняет данные в локальный JSON-файл. Полная приватность и хранение на вашей стороне.",
+                g2_text: "Кнопка экспорта упаковывает ваши данные в локальный JSON-файл. Благодаря чистой клиентской памяти (LocalStorage) вся информация принадлежит только вам.",
                 g3_title: "🔄 3. Восстановление Бэкапа",
-                g3_text: "При смене браузера выберите прошлый файл бэкапа для мгновенного восстановления записей.",
-                g4_title: "🌐 4. Многоязычность",
-                g4_text: "Поддержка шести языков, наслаждаясь восточной минималистичной эстетикой.",
-                copyright: "© 2026 Дворец Руй. Все права защищены. Коммерческое использование запрещено."
+                g3_text: "При смене браузера или устройства вы можете в один клик восстановить все записи с помощью сохраненного JSON-файла.",
+                g4_title: "🌐 4. Поддержка Языков",
+                g4_text: "Полная поддержка шести языков с мгновенным переключением интерфейса в восточном минималистичном стиле.",
+                copyright: "© 2026 Дворец Руй · Лин Си Цзянь. Все права защищены. Коммерческое использование запрещено."
             },
             es: {
                 title: "Humor de Primavera",
-                editHint: "(Haz clic para editar)",
-                subtitle: "Flujo de Estaciones·Tesoros de la Pluma",
+                editHint: "(Haz clic para editar el título)",
+                subtitle: "Fluido de Estaciones · Tesoros de la Pluma",
                 openBtn: "Abrir Libro",
                 indexTitle: "Catálogo y Tesoros Pasados",
                 closeBook: "Cerrar Portada",
-                newDiary: "+ Escribir Diario",
-                writeTitle: "Trazando Flores",
+                newDiary: "+ Nuevo Diario",
+                writeTitle: "Escribir con Flores",
                 backCatalog: "Volver al Catálogo",
-                backMonths: "← Volver a los meses",
+                backMonths: "← Volver a Meses",
                 stickerHint: "🌸 Pegatina floral aplicada",
-                toggleSticker: "Cambiar/Ajustar Pegatina",
-                stickerPick: "🌸 Seleccionar pegatina (11 opciones):",
+                toggleSticker: "Cambiar / Ajustar pegatina",
+                stickerPick: "🌸 Seleccionar pegatina:",
                 stickerPos: "Esquina de la pegatina:",
                 closePanel: "Listo",
-                posTR: "Arr-Der", posTL: "Arr-Izq", posBR: "Abj-Der", posBL: "Abj-Izq",
+                posTR: "Arriba-Der", posTL: "Arriba-Izq", posBR: "Abajo-Der", posBL: "Abajo-Izq",
                 defaultLocation: "Neubiberg",
                 defaultWeather: "Primavera · Soleado 24°C",
-                placeholder: "Escribe tus términos solares y estados de ánimo aquí...",
+                placeholder: "Escribe aquí tus estados de ánimo y términos solares...",
                 saveBtn: "Guardar",
-                deleteBtn: "Eliminar",
+                deleteBtn: "Eliminar entrada",
                 brandText: "—— Palacio Rui ——",
-                emptyCatalog: "El libro está en blanco. Haz clic en '+ Escribir Diario' arriba para comenzar.",
-                alertDateContent: "Por favor, rellena la fecha y el contenido del diario.",
-                alertExists: "Ya existe un diario para esta fecha.",
-                alertSuccess: "Registrado con éxito en el catálogo.",
-                confirmDelete: "¿Estás seguro de que quieres eliminar este tesoro?",
-                monthEntriesUnit: count => `${count} entradas registradas`,
+                emptyCatalog: "El libro está en blanco. Haz clic arriba en '+ Nuevo Diario' para empezar.",
+                alertDateContent: "Por favor, completa la fecha y el contenido del diario.",
+                alertExists: "Ya existe un diario para esta fecha. Edítalo directamente en el catálogo.",
+                alertSuccess: "Registrado con éxito en el catálogo del Palacio Rui.",
+                confirmDelete: "¿Estás seguro de que deseas eliminar este tesoro?",
+                monthEntriesUnit: count => `${count} entradas de primavera registradas`,
                 clickEnter: "Ver >",
                 exportBtn: "Exportar copia",
                 importBtn: "Restaurar copia",
+                bindLocalFile: "Vincular manuscrito",
+                bindMsg: "Conexión de archivo establecida. Todos los escritos se guardarán automáticamente.",
                 backupSuccess: "¡Copia de seguridad restaurada con éxito! La página se recargará.",
-                backupError: "¡Formato de archivo inválido, no se puede restaurar!",
-                guideTab: "Instrucciones",
+                backupError: "¡Formato de archivo erróneo, no se pudo restaurar!",
+                guideTab: "Guía",
                 guideTitle: "Instrucciones y Derechos",
                 g1_title: "🌸 1. Lectura y Escritura",
-                g1_text: "Haz clic en 'Abrir Libro' para entrar al catálogo. Explora tesoros pasados o escribe un nuevo diario.",
-                g2_title: "📥 2. Exportar Copia (Privacidad)",
-                g2_text: "El botón 'Exportar copia' guarda tus datos en un archivo JSON local. Tu privacidad está garantizada al 100%.",
+                g1_text: "Haz clic en 'Abrir Libro' en la portada para entrar al catálogo. Revisa los tesoros por mes o escribe nuevas entradas. Personaliza las pegatinas florales y sus esquinas libremente.",
+                g2_title: "📥 2. Exportar Copia (Privacidad Local)",
+                g2_text: "El botón de exportación empaqueta tus datos en un archivo JSON local. Al usar almacenamiento exclusivamente frontend (LocalStorage), tu privacidad es absoluta.",
                 g3_title: "🔄 3. Restaurar Copia",
-                g3_text: "Si cambias de navegador, selecciona tu archivo JSON anterior para restaurar todas tus entradas.",
+                g3_text: "Si cambias de navegador o limpias la caché, selecciona tu archivo JSON anterior para restaurar todas tus entradas al instante.",
                 g4_title: "🌐 4. Soporte Multilingüe",
-                g4_text: "Compatible con seis idiomas disfrutando de una estética oriental minimalista.",
-                copyright: "© 2026 Palacio Rui. Todos los derechos reservados. Prohibida su reproducción comercial."
+                g4_text: "Compatible con seis idiomas. El cambio de idioma traduce de forma fluida todo el sitio manteniendo una estética oriental minimalista.",
+                copyright: "© 2026 Palacio Rui · Ling Xi Jian. Todos los derechos reservados. Prohibida la reproducción comercial."
             }
         };
 
         let currentLang = 'zh';
 
-        function switchLanguage(lang) {
-            currentLang = lang;
-            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            updatePageTexts();
-        }
+       
+function switchLanguage(lang, btnElement) {
+    currentLang = lang; // 确保当前全局语言变量被正确更新
 
+    // 移除所有语言按钮的 active 状态
+    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+
+    // 如果传入了点击的按钮元素则高亮它，否则根据 lang 属性匹配高亮
+    if (btnElement) {
+        btnElement.classList.add('active');
+    } else {
+        const targetBtn = Array.from(document.querySelectorAll('.lang-btn'))
+            .find(b => b.getAttribute('onclick') && b.getAttribute('onclick').includes(`('${lang}'`));
+        if (targetBtn) targetBtn.classList.add('active');
+    }
+
+    // 刷新页面所有文案
+    updatePageTexts();
+}
         function toggleGuideDrawer() {
             document.getElementById('guideDrawerPanel').classList.toggle('open');
             document.getElementById('guideOverlay').classList.toggle('show');
@@ -1148,6 +1084,7 @@
 
             document.getElementById('btnExportData').innerText = t.exportBtn;
             document.getElementById('btnImportDataLabel').innerText = t.importBtn;
+            document.getElementById('saveButton').innerText = t.bindLocalFile;
 
             document.getElementById('guideTabLabel').innerText = t.guideTab;
             document.getElementById('guideNavTitle').innerText = t.guideTitle;
@@ -1181,6 +1118,20 @@
             initStickerThumbnails();
             renderMonthCatalog();
             goToPage('pageCover');
+
+            // 绑定本地手稿点击事件
+            document.getElementById('saveButton').addEventListener('click', async function setupFileAccess() {
+                try {
+                    [fileHandle] = await window.showOpenFilePicker({
+                        types: [{ description: '日记手稿', accept: { 'application/json': ['.json'] } }],
+                        multiple: false
+                    });
+                    console.log("连接已建立，所有书写将自动持久化在此文件。");
+                    alert(translations[currentLang].bindMsg);
+                } catch (err) {
+                    console.log("用户取消了文件选择或浏览器暂不支持。");
+                }
+            });
         };
 
         function toggleStickerToolbar() {
@@ -1310,7 +1261,7 @@
             }
         }
 
-        function saveAndReturnIndex() {
+        async function saveAndReturnIndex() {
             const t = translations[currentLang];
             const date = document.getElementById('inputDate').value;
             const location = document.getElementById('inputLocation').value;
@@ -1354,7 +1305,20 @@
             }
 
             entries.sort((a, b) => new Date(b.date) - new Date(a.date));
-            localStorage.setItem('ruigong_princess_diaries', JSON.stringify(entries));
+            const dataString = JSON.stringify(entries);
+            localStorage.setItem('ruigong_princess_diaries', dataString);
+
+            // 如果用户之前通过 File System API 绑定了本地文件，尝试直接写入硬盘
+            if (fileHandle) {
+                try {
+                    const writable = await fileHandle.createWritable();
+                    await writable.write(dataString);
+                    await writable.close();
+                } catch (e) {
+                    console.log("写入绑定文件时出错：", e);
+                }
+            }
+
             alert(t.alertSuccess);
 
             if (editingDate) {
@@ -1368,7 +1332,7 @@
             document.getElementById('pageIndex').classList.add('active');
         }
 
-        function deleteCurrentDiary() {
+        async function deleteCurrentDiary() {
             const t = translations[currentLang];
             const dateToDelete = editingDate || document.getElementById('inputDate').value;
             
@@ -1377,7 +1341,18 @@
             if(confirm(t.confirmDelete)) {
                 let entries = JSON.parse(localStorage.getItem('ruigong_princess_diaries') || '[]');
                 entries = entries.filter(item => item.date !== dateToDelete);
-                localStorage.setItem('ruigong_princess_diaries', JSON.stringify(entries));
+                const dataString = JSON.stringify(entries);
+                localStorage.setItem('ruigong_princess_diaries', dataString);
+
+                if (fileHandle) {
+                    try {
+                        const writable = await fileHandle.createWritable();
+                        await writable.write(dataString);
+                        await writable.close();
+                    } catch (e) {
+                        console.log("同步删除至绑定文件时出错：", e);
+                    }
+                }
                 
                 const month = dateToDelete.substring(0, 7);
                 editingDate = null;
@@ -1507,18 +1482,19 @@
             };
             reader.readAsText(file);
         }
-// 注册 Service Worker 实现离线缓存
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js')
-            .then(reg => {
-                console.log('Service Worker 注册成功:', reg.scope);
-            })
-            .catch(err => {
-                console.log('Service Worker 注册失败:', err);
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => {
+                        console.log('Service Worker 注册成功:', reg.scope);
+                    })
+                    .catch(err => {
+                        console.log('Service Worker 注册失败:', err);
+                    });
             });
-    });
-}
+        }
     </script>
+
 </body>
 </html>
