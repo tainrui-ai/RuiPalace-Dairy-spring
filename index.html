@@ -1295,6 +1295,30 @@
             });
         }
     </script>
+<script>
+    // 页面加载完成时自动执行的检测逻辑
+    window.addEventListener('DOMContentLoaded', () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
 
+        if (token) {
+            // 如果链接里带了 token，说明是受邀客户，直接隐藏登记表单
+            // 并显示您的电子日记内容容器
+            document.getElementById('subscribeForm').style.display = 'none';
+            document.querySelector('.subtitle').style.display = 'none';
+            
+            // 假设您有一个 id 为 'diary-content' 的区域来存放日记
+            // 如果还没有，可以在页面上放一个 <div id="diary-content" style="display:none;">...</div>
+            const diaryContent = document.getElementById('diary-content');
+            if (diaryContent) {
+                diaryContent.style.display = 'block';
+            } else {
+                document.getElementById('message').innerHTML = "正在加载您的专属日记... / Loading your exclusive diary...";
+                // 这里可以执行跳转，或者展示日记内容
+                // window.location.href = "/diary-reader.html"; 
+            }
+        }
+    });
+</script>
 </body>
 </html>
