@@ -504,9 +504,7 @@
                 <span>·</span>
                 <label for="importFile" class="elegant-link" id="btnImportDataLabel" style="cursor: pointer;">恢复备份</label>
                 <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importDiaryData(event)">
-                <span>·</span>
-                //<button class="elegant-link" id="saveButton">绑定本地手稿</button>//
-            </div>
+                </div>
             
             <div style="margin-top: 20px; font-size: 0.9rem; color: var(--primary-color); letter-spacing: 0.25em;" id="coverBrand">—— 蕊宫 ——</div>
         </div>
@@ -939,18 +937,7 @@
             renderMonthCatalog();
             goToPage('pageCover');
 
-            document.getElementById('saveButton').addEventListener('click', async function setupFileAccess() {
-                try {
-                    [fileHandle] = await window.showOpenFilePicker({
-                        types: [{ description: '日记手稿', accept: { 'application/json': ['.json'] } }],
-                        multiple: false
-                    });
-                    console.log("连接已建立，所有书写将自动持久化在此文件。");
-                    alert(translations[currentLang].bindMsg);
-                } catch (err) {
-                    console.log("用户取消了文件选择或浏览器暂不支持。");
-                }
-            });
+            
         };
 
         function toggleStickerToolbar() {
@@ -1127,15 +1114,7 @@
             const dataString = JSON.stringify(entries);
             localStorage.setItem('ruigong_princess_diaries', dataString);
 
-            if (fileHandle) {
-                try {
-                    const writable = await fileHandle.createWritable();
-                    await writable.write(dataString);
-                    await writable.close();
-                } catch (e) {
-                    console.log("写入绑定文件时出错：", e);
-                }
-            }
+          
 
             alert(t.alertSuccess);
 
@@ -1162,15 +1141,7 @@
                 const dataString = JSON.stringify(entries);
                 localStorage.setItem('ruigong_princess_diaries', dataString);
 
-                if (fileHandle) {
-                    try {
-                        const writable = await fileHandle.createWritable();
-                        await writable.write(dataString);
-                        await writable.close();
-                    } catch (e) {
-                        console.log("同步删除至绑定文件时出错：", e);
-                    }
-                }
+                
                 
                 const month = dateToDelete.substring(0, 7);
                 editingDate = null;
