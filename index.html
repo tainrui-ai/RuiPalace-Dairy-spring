@@ -579,6 +579,20 @@
         let currentPoetryIndex = 0; 
         let fileHandle = null;
 
+
+        window.addEventListener('DOMContentLoaded', () => {
+            // 如果本地还没有日记数据，则尝试从隐藏的 #diary-content 容器中读取并初始化
+            if (!localStorage.getItem('ruigong_princess_diaries')) {
+                const hiddenDiv = document.getElementById('diary-content');
+                if (hiddenDiv) {
+                    const initialText = hiddenDiv.innerHTML.trim();
+                    // 如果容器内有实际内容，则写入 localStorage
+                    if (initialText) {
+                        localStorage.setItem('ruigong_princess_diaries', initialText);
+                    }
+                }
+            }
+        });
         const flowerList = [
             'image/flower1.jpg', 'image/flower2.jpg', 'image/flower3.jpg', 'image/flower4.jpg',
             'image/flower5.jpg', 'image/flower6.jpg', 'image/flower7.jpg', 'image/flower8.jpg',
