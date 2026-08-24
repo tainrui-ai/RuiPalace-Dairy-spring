@@ -1,7 +1,8 @@
-const CACHE_NAME = 'ruigong-diary-v1';
+[source: 7]const CACHE_NAME = 'ruigong-diary-v2';
 const assetsToCache = [
-  './index_3.html',
+  './index.html',
   './manifest.json',
+  './guide.html', // 确保使用说明文档也能离线访问
   './image/flower1.jpg',
   './image/flower2.jpg',
   './image/flower3.jpg',
@@ -15,7 +16,7 @@ const assetsToCache = [
   './image/flower11.jpg'
 ];
 
-// 安装阶段：缓存核心静态资源
+// 安装阶段：缓存核心静态资源[cite: 7]
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
@@ -26,7 +27,7 @@ self.addEventListener('install', event => {
   );
 });
 
-// 激活阶段：清理旧缓存
+// 激活阶段：清理旧版本缓存[cite: 7]
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(cacheNames => {
@@ -41,15 +42,15 @@ self.addEventListener('activate', event => {
   );
 });
 
-// 抓取阶段：优先从缓存读取，无网络时也能正常运行
+// 抓取阶段：优先从缓存读取，无网络时也能完美独立运行[cite: 7]
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)
       .then(response => {
         return response || fetch(event.request).catch(() => {
-          // 如果离线且请求的是主页面，可返回缓存的主页面
+          // 如果离线且请求的是主页面，返回缓存的主页面兜底[cite: 7]
           if (event.request.mode === 'navigate') {
-            return caches.match('./index_3.html');
+            return caches.match('./index.html');
           }
         });
       })
