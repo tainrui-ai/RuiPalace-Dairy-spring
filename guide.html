@@ -4,17 +4,15 @@
 <!-- 语言选择下拉菜单 -->
 <select id="language-selector" onchange="switchLanguage(this.value)">
     <option value="zh">中文</option>
-    <option value="en">English</option>
+    <option value="en" selected>English</option>
     <option value="de">Deutsch</option>
 </select>
 
-
-
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>使用说明 · 蕊宫 · 日记本</title>
+    <title>Instructions & Copyright Guide · Rui Palace</title>
 
     <style>
         :root {
@@ -91,7 +89,6 @@
             gap: 15px;
         }
 
-        /* 底部/导航栏精致语言切换按钮 */
         .lang-switcher {
             display: flex;
             gap: 6px;
@@ -193,53 +190,53 @@
 <body>
 
     <div class="book-sheet">
-        <img src="image/flower3.jpg" alt="花卉贴纸" class="corner-flower-sticker">
+        <img src="image/flower3.jpg" alt="Flower Sticker" class="corner-flower-sticker">
 
         <!-- 顶部导航与语言切换 -->
         <div class="page-nav">
-            <span class="nav-title" id="guideNavTitle">使用说明与版权指引</span>
+            <span class="nav-title" id="guideNavTitle">Instructions & Copyright Guide</span>
             <div class="nav-right-group">
                 <div class="lang-switcher">
-                    <button class="lang-btn active" onclick="switchLanguage('zh')">中</button>
-                    <button class="lang-btn" onclick="switchLanguage('en')">EN</button>
+                    <button class="lang-btn" onclick="switchLanguage('zh')">中</button>
+                    <button class="lang-btn active" onclick="switchLanguage('en')">EN</button>
                     <button class="lang-btn" onclick="switchLanguage('de')">DE</button>
                     <button class="lang-btn" onclick="switchLanguage('fr')">FR</button>
                     <button class="lang-btn" onclick="switchLanguage('ru')">RU</button>
                     <button class="lang-btn" onclick="switchLanguage('es')">ES</button>
                 </div>
-                <button class="btn-link" id="btnBackHome" onclick="window.location.href='index.html'">返回书封</button>
+                <button class="btn-link" id="btnBackHome" onclick="window.location.href='index.html'">Back to Cover</button>
             </div>
         </div>
 
-        <!-- 说明正文滚动区 -->
+        <!-- 说明正文滚动区（默认显示英文） -->
         <div class="content-area" id="guideContentArea">
             <div class="guide-section">
-                <div class="guide-h2" id="h2Title1">🌸 1. 书卷翻阅与日记落笔</div>
-                <div class="guide-p" id="pText1">在首页点击“翻开书卷”即可进入目录。您可以按月份查看过往藏珍，或点击右上角“书写新日记”记录当下的节气与心境。落笔时支持自由更换花卉贴纸、调整贴纸角位，并可点击底部诗词切换多语种春日名句。</div>
+                <div class="guide-h2" id="h2Title1">🌸 1. Reading & Writing Diaries</div>
+                <div class="guide-p" id="pText1">Click 'Open Book' on the cover to enter the catalog. View past treasures by month or click '+ Write New Diary'. Change floral stickers, adjust corners, and click the poetry footer for multilingual spring verses.</div>
             </div>
             
             <div class="guide-section">
-                <div class="guide-h2" id="h2Title2">📥 2. 导出备份与定期双保险</div>
-                <div class="guide-p" id="pText2">位于首页底部的“导出备份”按钮可随时将日记打包生成本地 JSON 文件。建议您定期手动导出备份作为“双保险”，以实现多重安全防护，绝对掌控您的个人隐私与数据安全。</div>
+                <div class="guide-h2" id="h2Title2">📥 2. Export Backup & Regular Double Insurance</div>
+                <div class="guide-p" id="pText2">The 'Export Backup' button packages your diary into a local JSON file anytime. We recommend exporting manual backups regularly as a 'double insurance' for multi-layered safety and absolute privacy control.</div>
             </div>
 
             <div class="guide-section">
-                <div class="guide-h2" id="h2Title3">🔄 3. 恢复备份（数据导入）</div>
-                <div class="guide-p" id="pText3">若更换了浏览器、设备，可点击首页底部的“恢复备份”按钮，选择以往导出的 JSON 备份文件即可一键还原全部日记内容。</div>
+                <div class="guide-h2" id="h2Title3">🔄 3. Restore Backup</div>
+                <div class="guide-p" id="pText3">If you change browsers or devices, click 'Restore Backup' and select your previous JSON backup file to restore all entries instantly.</div>
             </div>
 
             <div class="guide-section">
-                <div class="guide-h2" id="h2Title4">🌐 4. 多语言支持与交互体验</div>
-                <div class="guide-p" id="pText4">本站完美支持中、英、德、法、俄、西六种语言。您随时可以通过上方的语言按钮无缝转换整站文案。排版与交互设计均充分契合东方式极简美学。</div>
+                <div class="guide-h2" id="h2Title4">🌐 4. Multilingual & Aesthetics</div>
+                <div class="guide-p" id="pText4">Supports Chinese, English, German, French, Russian, and Spanish. Seamlessly switch using the top language menu while enjoying minimalist oriental aesthetics.</div>
             </div>
         </div>
 
         <!-- 底部版权与品牌区 -->
         <div class="footer-area">
             <div class="copyright-text" id="copyrightText">
-                © 2026 蕊宫 版权所有保留所有权利。未经授权，禁止任何形式的商业转载、改编或盗用。
+                © 2026 Rui Palace · Ling Xi Jian. All rights reserved. Unauthorized commercial reproduction or adaptation is prohibited.
             </div>
-            <div class="brand-footer" id="guideBrand">—— 蕊宫 ——</div>
+            <div class="brand-footer" id="guideBrand">—— Rui Palace ——</div>
         </div>
     </div>
 
@@ -250,13 +247,12 @@
                 backHome: "返回书封",
                 h2_1: "🌸 1. 书卷翻阅与日记落笔",
                 p_1: "在首页点击“翻开书卷”即可进入目录。您可以按月份查看过往藏珍，或点击右上角“书写新日记”记录当下的节气与心境。落笔时支持自由更换花卉贴纸、调整贴纸角位，并可点击底部诗词切换多语种春日名句。",
-                
                 h2_2: "📥 2. 导出备份与定期双保险",
                 p_2: "位于首页底部的“导出备份”按钮可随时将日记打包生成本地 JSON 文件。建议您定期手动导出备份作为“双保险”，以实现多重安全防护，绝对掌控您的个人隐私与数据安全。",
                 h2_3: "🔄 3. 恢复备份（数据导入）",
                 p_3: "若更换了浏览器、设备，可点击首页底部的“恢复备份”按钮，选择以往导出的 JSON 备份文件即可一键还原全部日记内容。",
                 h2_4: "🌐 4. 多语言支持与交互体验",
-                p_4: "本站完美支持中、英、德、法、俄、西六种语言。您随时可以通过上方的语言按钮无缝转换整站文案。排版与交互设计均充分契合东方式极简美学。",
+                p_4: "本站完美支持中、英、德,、法、俄、西六种语言。您随时可以通过上方的语言按钮无缝转换整站文案。排版与交互设计均充分契合东方式极简美学。",
                 copyright: "© 2026 蕊宫版权所有保留所有权利。未经授权，禁止任何形式的商业转载、改编或盗用。",
                 brand: "—— 蕊宫  ——"
             },
@@ -265,62 +261,54 @@
                 backHome: "Back to Cover",
                 h2_1: "🌸 1. Reading & Writing Diaries",
                 p_1: "Click 'Open Book' on the cover to enter the catalog. View past treasures by month or click '+ Write New Diary'. Change floral stickers, adjust corners, and click the poetry footer for multilingual spring verses.",
-                h2_2: "📂 2. Automatic Local Folder Binding (Anti-Loss Core)",
-                p_2: "To prevent data loss from browser cache clearing or unbacked changes, please bind a designated local computer folder upon your first visit. Once connected, all your writings will automatically persist and sync into this folder.",
-                h2_3: "📥 3. Export Backup & Regular Double Insurance",
-                p_3: "The 'Export Backup' button packages your diary into a local JSON file anytime. We recommend exporting manual backups regularly as a 'double insurance' for multi-layered safety and absolute privacy control.",
-                h2_4: "🔄 4. Restore Backup",
-                p_4: "If you change browsers or devices, click 'Restore Backup' and select your previous JSON backup file to restore all entries instantly.",
-                h2_5: "🌐 5. Multilingual & Aesthetics",
-                p_5: "Supports Chinese, English, German, French, Russian, and Spanish. Seamlessly switch using the top language menu while enjoying minimalist oriental aesthetics.",
+                h2_2: "📥 2. Export Backup & Regular Double Insurance",
+                p_2: "The 'Export Backup' button packages your diary into a local JSON file anytime. We recommend exporting manual backups regularly as a 'double insurance' for multi-layered safety and absolute privacy control.",
+                h2_3: "🔄 3. Restore Backup",
+                p_3: "If you change browsers or devices, click 'Restore Backup' and select your previous JSON backup file to restore all entries instantly.",
+                h2_4: "🌐 4. Multilingual & Aesthetics",
+                p_4: "Supports Chinese, English, German, French, Russian, and Spanish. Seamlessly switch using the top language menu while enjoying minimalist oriental aesthetics.",
                 copyright: "© 2026 Rui Palace · Ling Xi Jian. All rights reserved. Unauthorized commercial reproduction or adaptation is prohibited.",
-                brand: "—— Rui Palace · Ling Xi Jian ——"
+                brand: "—— Rui Palace ——"
             },
             de: {
                 navTitle: "Anleitung & Urheberrecht",
                 backHome: "Zum Umschlag",
                 h2_1: "🌸 1. Lesen & Tagebuch schreiben",
                 p_1: "Klicken Sie auf „Buch öffnen“, um den Katalog aufzurufen. Betrachten Sie Schätze nach Monat oder schreiben Sie über „Neues Tagebuch“ Ihre aktuellen Stimmungen nieder. Sticker lassen sich flexibel anpassen.",
-                h2_2: "📂 2. Automatisches Binden eines lokalen Ordners (Schutz vor Verlust)",
-                p_2: "Um Datenverlust durch Cache-Löschung zu vermeiden, binden Sie beim ersten Mal unbedingt einen lokalen Computerordner an. Nach der Verbindung werden alle Schriften automatisch in diesem Ordner dauerhaft gespeichert.",
-                h2_3: "📥 3. Backup exportieren & regelmäßige doppelte Absicherung",
-                p_3: "Der Button „Backup exportieren“ erstellt jederzeit eine lokale JSON-Datei. Es wird empfohlen, regelmäßig manuelle Backups als „doppelte Absicherung“ zu erstellen, um die absolute Datensicherheit zu gewährleisten.",
-                h2_4: "🔄 4. Backup wiederherstellen",
-                p_4: "Bei Browserwechsel oder Gerätetausch wählen Sie Ihre JSON-Sicherheitskopie über „Backup wiederherstellen“ aus, um alle Einträge sofort wiederherzustellen.",
-                h2_5: "🌐 5. Mehrsprachigkeit & Ästhetik",
-                p_5: "Die Website unterstützt sechs Sprachen. Wechseln Sie nahtlos über das obere Sprachmenü und genießen Sie die minimalistische orientalische Ästhetik.",
+                h2_2: "📥 3. Backup exportieren & regelmäßige doppelte Absicherung",
+                p_2: "Der Button „Backup exportieren“ erstellt jederzeit eine lokale JSON-Datei. Es wird empfohlen, regelmäßig manuelle Backups als „doppelte Absicherung“ zu erstellen, um die absolute Datensicherheit zu gewährleisten.",
+                h2_3: "🔄 4. Backup wiederherstellen",
+                p_3: "Bei Browserwechsel oder Gerätetausch wählen Sie Ihre JSON-Sicherheitskopie über „Backup wiederherstellen“ aus, um alle Einträge sofort wiederherzustellen.",
+                h2_4: "🌐 5. Mehrsprachigkeit & Ästhetik",
+                p_4: "Die Website unterstützt sechs Sprachen. Wechseln Sie nahtlos über das obere Sprachmenü und genießen Sie die minimalistische orientalische Ästhetik.",
                 copyright: "© 2026 Rui Palast · Ling Xi Jian. Alle Rechte vorbehalten. Unerlaubte kommerzielle Nutzung oder Anpassung ist untersagt.",
-                brand: "—— Rui Palast · Ling Xi Jian ——"
+                brand: "—— Rui Palast ——"
             },
             fr: {
                 navTitle: "Instructions & Droits d'Auteur",
                 backHome: "Retour à la Couverture",
                 h2_1: "🌸 1. Lecture et Écriture",
                 p_1: "Cliquez sur « Ouvrir le Livre » pour accéder au catalogue. Consultez les notes par mois ou créez un nouveau journal. Personnalisez les autocollants et les coins.",
-                h2_2: "📂 2. Liaison automatique du dossier local (Anti-perte)",
-                p_2: "Pour éviter toute perte de données en cas de nettoyage du cache, veuillez lier un dossier local de votre ordinateur dès la première utilisation. Tous vos écrits y seront automatiquement synchronisés.",
-                h2_3: "📥 3. Exportation et double assurance régulière",
-                p_3: "Le bouton d'exportation rassemble vos données dans un fichier JSON local. Il est conseillé d'effectuer des sauvegardes manuelles régulières comme « double assurance » pour une sécurité absolue.",
-                h2_4: "🔄 4. Restaurer la Sauvegarde",
-                p_4: "En cas de changement d'appareil ou de nettoyage du cache, importez votre fichier JSON pour restaurer instantanément l'ensemble de vos journaux.",
-                h2_5: "🌐 5. Support Multilingue et Esthétique",
-                p_5: "Prend en charge six langues. Changez facilement via le menu supérieur tout en profitant d'une esthétique orientale minimaliste.",
+                h2_2: "📥 3. Exportation et double assurance régulière",
+                p_2: "Le bouton d'exportation rassemble vos données dans un fichier JSON local. Il est conseillé d'effectuer des sauvegardes manuelles régulières comme « double assurance » pour une sécurité absolue.",
+                h2_3: "🔄 4. Restaurer la Sauvegarde",
+                p_3: "En cas de changement d'appareil ou de nettoyage du cache, importez votre fichier JSON pour restaurer instantanément l'ensemble de vos journaux.",
+                h2_4: "🌐 5. Support Multilingue et Esthétique",
+                p_4: "Prend en charge six langues. Changez facilement via le menu supérieur tout en profitant d'une esthétique orientale minimaliste.",
                 copyright: "© 2026 Palais Rui · Ling Xi Jian. Tous droits réservés. Reproduction commerciale interdite.",
-                brand: "—— Palais Rui · Ling Xi Jian ——"
+                brand: "—— Palais Rui ——"
             },
             ru: {
                 navTitle: "Инструкция и Авторские Права",
                 backHome: "К обложке",
                 h2_1: "🌸 1. Чтение и Написание Дневника",
                 p_1: "Нажмите «Открыть Книгу» для входа в каталог. Просматривайте архив по месяцам или создавайте новые записи. Меняйте цветочные стикеры и настраивайте их положение.",
-                h2_2: "📂 2. Автоматическая привязка локальной папки (Защита от потери)",
-                p_2: "Чтобы избежать потери данных при очистке кэша браузера, обязательно привяжите указанную локальную папку на компьютере при первом использовании. Ваши записи будут автоматически сохраняться в ней.",
-                h2_3: "📥 3. Экспорт бэкапа и регулярная двойная страховка",
-                p_3: "Кнопка экспорта упаковывает ваши данные в локальный JSON-файл. Рекомендуется регулярно делать ручные бэкапы в качестве «двойной страховки» для абсолютной безопасности конфиденциальных данных.",
-                h2_4: "🔄 4. Восстановление Бэкапа",
-                p_4: "При смене браузера или устройства вы можете в один клик восстановить все записи с помощью сохраненного JSON-файла.",
-                h2_5: "🌐 5. Поддержка Языков",
-                p_5: "Полная поддержка шести языков с мгновенным переключением через верхнее меню в восточном минималистичном стиле.",
+                h2_2: "📥 3. Экспорт бэкапа и регулярная двойная страховка",
+                p_2: "Кнопка экспорта упаковывает ваши данные в локальный JSON-файл. Рекомендуется регулярно делать ручные бэкапы в качестве «двойной страховки» для абсолютной безопасности конфиденциальных данных.",
+                h2_3: "🔄 4. Восстановление Бэкапа",
+                p_3: "При смене браузера или устройства вы можете в один клик восстановить все записи с помощью сохраненного JSON-файла.",
+                h2_4: "🌐 5. Поддержка Языков",
+                p_4: "Полная поддержка шести языков с мгновенным переключением через верхнее меню в восточном минималистичном стиле.",
                 copyright: "© 2026 Дворец Руй · Лин Си Цзянь. Все права защищены. Коммерческое использование запрещено.",
                 brand: "—— Дворец Руй · Лин Си Цзянь ——"
             },
@@ -329,16 +317,14 @@
                 backHome: "Volver a Portada",
                 h2_1: "🌸 1. Lectura y Escritura",
                 p_1: "Haz clic en 'Abrir Libro' para entrar al catálogo. Explora tesoros pasados por mes o escribe nuevos diarios. Personaliza las pegatinas libremente.",
-                h2_2: "📂 2. Vinculación automática de carpeta local (Antiperdida)",
-                p_2: "Para evitar la pérdida de datos por borrado de caché, asegúrate de vincular una carpeta local en tu ordenador en el primer uso. Todos tus escritos se sincronizarán y guardarán allí automáticamente.",
-                h2_3: "📥 3. Exportar copia y doble seguro periódico",
-                p_3: "El botón de exportación genera un archivo JSON local en cualquier momento. Se recomienda realizar copias manuales periódicas como un «doble seguro» para garantizar la seguridad absoluta de tus datos.",
-                h2_4: "🔄 4. Restaurar Copia",
-                p_4: "Si cambias de navegador o dispositivo, selecciona tu archivo JSON anterior para restaurar todas tus entradas al instante.",
-                h2_5: "🌐 5. Soporte Multilingüe",
-                p_5: "Compatible con seis idiomas. Cambia sin problemas desde el menú superior disfrutando de una estética oriental minimalista.",
+                h2_2: "📥 3. Exportar copia y doble seguro periódico",
+                p_2: "El botón de exportación genera un archivo JSON local en cualquier momento. Se recomienda realizar copias manuales periódicas como un «doble seguro» para garantizar la seguridad absoluta de tus datos.",
+                h2_3: "🔄 4. Restaurar Copia",
+                p_3: "Si cambias de navegador o dispositivo, selecciona tu archivo JSON anterior para restaurar todas tus entradas al instante.",
+                h2_4: "🌐 5. Soporte Multilingüe",
+                p_4: "Compatible con seis idiomas. Cambia sin problemas desde el menú superior disfrutando de una estética oriental minimalista.",
                 copyright: "© 2026 Palacio Rui · Ling Xi Jian. Todos los derechos reservados. Prohibida su reproducción comercial.",
-                brand: "—— Palacio Rui · Ling Xi Jian ——"
+                brand: "—— Palacio Rui ——"
             }
         };
 
@@ -351,16 +337,50 @@
 
             document.getElementById('guideNavTitle').innerText = t.navTitle;
             document.getElementById('btnBackHome').innerText = t.backHome;
-            document.getElementById('h2Title1').innerText = t.h2_1;
-            document.getElementById('pText1').innerText = t.p_1;
-            document.getElementById('h2Title2').innerText = t.h2_2;
-            document.getElementById('pText2').innerText = t.p_2;
-            document.getElementById('h2Title3').innerText = t.h2_3;
-            document.getElementById('pText3').innerText = t.p_3;
-            document.getElementById('h2Title4').innerText = t.h2_4;
-            document.getElementById('pText4').innerText = t.p_4;
-            document.getElementById('h2Title5').innerText = t.h2_5;
-            document.getElementById('pText5').innerText = t.p_5;
+            
+            // 动态渲染对应语言的区块
+            const contentArea = document.getElementById('guideContentArea');
+            let htmlContent = '';
+            
+            if (lang === 'zh') {
+                htmlContent = `
+                    <div class="guide-section">
+                        <div class="guide-h2">${t.h2_1}</div>
+                        <div class="guide-p">${t.p_1}</div>
+                    </div>
+                    <div class="guide-section">
+                        <div class="guide-h2">${t.h2_2}</div>
+                        <div class="guide-p">${t.p_2}</div>
+                    </div>
+                    <div class="guide-section">
+                        <div class="guide-h2">${t.h2_3}</div>
+                        <div class="guide-p">${t.p_3}</div>
+                    </div>
+                    <div class="guide-section">
+                        <div class="guide-h2">${t.h2_4}</div>
+                        <div class="guide-p">${t.p_4}</div>
+                    </div>`;
+            } else {
+                htmlContent = `
+                    <div class="guide-section">
+                        <div class="guide-h2">${t.h2_1}</div>
+                        <div class="guide-p">${t.p_1}</div>
+                    </div>
+                    <div class="guide-section">
+                        <div class="guide-h2">${t.h2_2}</div>
+                        <div class="guide-p">${t.p_2}</div>
+                    </div>
+                    <div class="guide-section">
+                        <div class="guide-h2">${t.h2_3}</div>
+                        <div class="guide-p">${t.p_3}</div>
+                    </div>
+                    <div class="guide-section">
+                        <div class="guide-h2">${t.h2_4}</div>
+                        <div class="guide-p">${t.p_4}</div>
+                    </div>`;
+            }
+            contentArea.innerHTML = htmlContent;
+            
             document.getElementById('copyrightText').innerText = t.copyright;
             document.getElementById('guideBrand').innerText = t.brand;
         }
