@@ -1,37 +1,55 @@
+/* ================= 全局西文瘦长与紧凑排版优化 ================= */
+body, input, button, textarea, select {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, "Segoe UI", sans-serif;
+  letter-spacing: -0.02em; 
+}
+
 .hero-title-container {
-  /* 适当加大容器内边距，留出视觉呼吸空间 */
   padding: 0 1.5rem;
   width: 100%;
   box-sizing: border-box;
-  overflow: hidden; /* 防止溢出破坏整体布局 */
+  overflow: hidden; 
 }
 
 .hero-title {
-  /* 强制单行显示，避免单词被中途割裂 */
-  white-space: nowrap;
-  
-  /* 使用 clamp 实现流体响应式字号：最小 1.2rem，视口占比 4vw，最大 2.5rem */
-  font-size: clamp(1.2rem, 4vw, 2.5rem);
-  
-  /* 确保文本居中或对齐一致 */
-  text-align: center;
-  margin: 0;
+  white-space: nowrap !important;
+  font-size: clamp(1.2rem, 4vw, 2.5rem) !important;
+  text-align: center !important;
+  margin: 0 !important;
+  letter-spacing: -0.1em !important; 
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+  font-weight: 400 !important;
 }
 
 .hero-subtitle {
-  white-space: nowrap;
-  font-size: clamp(0.85rem, 2vw, 1.2rem);
-  opacity: 0.85;
+  white-space: nowrap !important;
+  font-size: clamp(0.85rem, 2vw, 1.2rem) !important;
+  opacity: 0.85 !important;
+  letter-spacing: -0.08em !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
 }
 
+/* 【专属升级】针对德/法/俄/西语首页大标题（如 Frühlingsstimmung）的强制超紧凑缩进 */
 .cover-title {
-    font-size: 3rem;
-    color: var(--primary-color);
-    letter-spacing: 0.2em; /* 在这里设置你需要的字间距，例如 0.15em 或 0.2em */
-    font-weight: 600;
+    font-size: clamp(1.8rem, 4vw, 3rem) !important; /* 使用流体字号防止长单词撑破屏幕 */
+    color: var(--primary-color) !important;
+    letter-spacing: -0.02em !important; /* 极大程度缩进字母间距，使其紧凑高级 */
+    font-weight: 600 !important;
     outline: none;
-    margin: 0;
+    margin: 0; 
+    white-space: nowrap !important; /* 强制不换行，保持单行优雅 */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+
 }
+
+.cover-subtitle {
+    font-size: 1.15rem;
+    color: var(--sub-text);
+    letter-spacing: -0.03em !important;
+    margin-bottom: 80px;/* 如果原来是 40px，调大到 80px 就可以让它往下移 */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+}
+
 /* ================= 典雅古风密码弹窗样式 ================= */
 .password-overlay {
     position: fixed;
@@ -181,4 +199,22 @@
   padding: 8px 24px;
   border-radius: 4px;
   cursor: pointer;
+}
+/* 针对所有西文语言环境，自动启用紧凑的无衬线字体与负字间距 */
+:lang(en), :lang(de), :lang(fr), :lang(ru), :lang(es) {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif !important;
+    letter-spacing: -0.08em !important;
+}
+
+/* 针对首页封面大标题在西文下的极端紧凑优化 */
+:lang(de) .cover-title, :lang(en) .cover-title {
+    letter-spacing: -0.02em !important;
+    font-weight: 500 !important;
+}
+
+/* 激活状态的语言按钮样式 */
+.lang-btn.active {
+    background-color: #007bff;
+    color: #fff;
+    font-weight: bold;
 }
