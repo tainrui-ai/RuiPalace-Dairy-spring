@@ -23,6 +23,7 @@ const translations = {
     }
 };
 
+
 // 2. 语言切换核心函数
 function switchLanguage(lang) {
     // 检查字典中是否存在该语言
