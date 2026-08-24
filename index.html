@@ -7,6 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>春天的心情 · 蕊宫</title>
 
     <style>
@@ -467,12 +468,12 @@
     </style>
 </head>
 <body>
-<!-- 将容器放在这里：<body> 标签内部的合适位置 -->
+    <!-- 预留的日记内容容器（供后续密码/Token登录扩展使用）[cite: 21] -->
     <div id="diary-content" style="display: none;">
-        <!-- 这里放置您真正的日记内容 -->
         <h1>欢迎来到您的专属空间</h1>
     </div>
-    <!-- 直接连接到现成的 guide.html 静态文档 -->
+    
+    <!-- 直接连接到现成的 guide.html 静态文档[cite: 21] -->
     <a href="guide.html" class="guide-sidebar-tab" id="guideTabLabel" target="_blank">使用说明</a>
 
     <div class="book-sheet">
@@ -504,7 +505,7 @@
                 <span>·</span>
                 <label for="importFile" class="elegant-link" id="btnImportDataLabel" style="cursor: pointer;">恢复备份</label>
                 <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importDiaryData(event)">
-                </div>
+            </div>
             
             <div style="margin-top: 20px; font-size: 0.9rem; color: var(--primary-color); letter-spacing: 0.25em;" id="coverBrand">—— 蕊宫 ——</div>
         </div>
@@ -577,20 +578,20 @@
         let currentPoetryIndex = 0; 
         let fileHandle = null;
 
-
+        // 页面加载完成时自动执行的检测逻辑（预留以后密码登录/Token校验使用）
         window.addEventListener('DOMContentLoaded', () => {
-            // 如果本地还没有日记数据，则尝试从隐藏的 #diary-content 容器中读取并初始化
-            if (!localStorage.getItem('ruigong_princess_diaries')) {
-                const hiddenDiv = document.getElementById('diary-content');
-                if (hiddenDiv) {
-                    const initialText = hiddenDiv.innerHTML.trim();
-                    // 如果容器内有实际内容，则写入 localStorage
-                    if (initialText) {
-                        localStorage.setItem('ruigong_princess_diaries', initialText);
-                    }
+            const urlParams = new URLSearchParams(window.location.search);
+            const token = urlParams.get('token');
+
+            if (token) {
+                // 如果以后需要根据 token 或密码控制显示隐藏，可在此处扩展
+                const diaryContent = document.getElementById('diary-content');
+                if (diaryContent) {
+                    diaryContent.style.display = 'block';
                 }
             }
         });
+
         const flowerList = [
             'image/flower1.jpg', 'image/flower2.jpg', 'image/flower3.jpg', 'image/flower4.jpg',
             'image/flower5.jpg', 'image/flower6.jpg', 'image/flower7.jpg', 'image/flower8.jpg',
@@ -668,8 +669,6 @@
                 clickEnter: "点击进入 >",
                 exportBtn: "导出备份",
                 importBtn: "恢复备份",
-                bindLocalFile: "绑定本地手稿",
-                bindMsg: "本地手稿连接已建立，所有书写将自动持久化。",
                 backupSuccess: "备份恢复成功！页面即将刷新。",
                 backupError: "文件格式错误，无法恢复备份！",
                 guideTab: "使用说明"
@@ -706,8 +705,6 @@
                 clickEnter: "View >",
                 exportBtn: "Export Backup",
                 importBtn: "Restore Backup",
-                bindLocalFile: "Bind Local Manuscript",
-                bindMsg: "File connection established! All writings will be automatically persisted.",
                 backupSuccess: "Backup restored successfully! Page is refreshing.",
                 backupError: "Invalid file format, cannot restore backup!",
                 guideTab: "Instructions"
@@ -744,8 +741,6 @@
                 clickEnter: "Anzeigen >",
                 exportBtn: "Backup exportieren",
                 importBtn: "Backup wiederherstellen",
-                bindLocalFile: "Lokales Manuskript binden",
-                bindMsg: "Verbindung zum lokalen Manuskript hergestellt. Alle Änderungen werden automatisch gespeichert.",
                 backupSuccess: "Backup erfolgreich wiederhergestellt! Die Seite wird aktualisiert.",
                 backupError: "Ungültiges Dateiformat, Backup konnte nicht wiederhergestellt werden!",
                 guideTab: "Anleitung"
@@ -782,8 +777,6 @@
                 clickEnter: "Voir >",
                 exportBtn: "Exporter la sauvegarde",
                 importBtn: "Restaurer la sauvegarde",
-                bindLocalFile: "Lier le manuscrit local",
-                bindMsg: "Connexion au manuscrit établie. Toutes les modifications seront enregistrées automatiquement.",
                 backupSuccess: "Sauvegarde restaurée avec succès ! Actualisation en cours.",
                 backupError: "Format de fichier invalide, échec de la restauration !",
                 guideTab: "Guide"
@@ -820,8 +813,6 @@
                 clickEnter: "Смотреть >",
                 exportBtn: "Экспорт бэкапа",
                 importBtn: "Импорт бэкапа",
-                bindLocalFile: "Привязать рукопись",
-                bindMsg: "Связь с локальным файлом установлена. Все записи сохраняются автоматически.",
                 backupSuccess: "Бэкап успешно восстановлен! Страница обновляется.",
                 backupError: "Неверный формат файла, не удалось восстановить бэкап!",
                 guideTab: "Справка"
@@ -858,8 +849,6 @@
                 clickEnter: "Ver >",
                 exportBtn: "Exportar copia",
                 importBtn: "Restaurar copia",
-                bindLocalFile: "Vincular manuscrito",
-                bindMsg: "Conexión de archivo establecida. Todos los escritos se guardarán automáticamente.",
                 backupSuccess: "¡Copia de seguridad restaurada con éxito! La página se recargará.",
                 backupError: "¡Formato de archivo erróneo, no se pudo restaurar!",
                 guideTab: "Guía"
@@ -913,7 +902,6 @@
 
             document.getElementById('btnExportData').innerText = t.exportBtn;
             document.getElementById('btnImportDataLabel').innerText = t.importBtn;
-            document.getElementById('saveButton').innerText = t.bindLocalFile;
             document.getElementById('guideTabLabel').innerText = t.guideTab;
 
             if (!editingDate) {
@@ -936,8 +924,6 @@
             initStickerThumbnails();
             renderMonthCatalog();
             goToPage('pageCover');
-
-            
         };
 
         function toggleStickerToolbar() {
@@ -1114,7 +1100,10 @@
             const dataString = JSON.stringify(entries);
             localStorage.setItem('ruigong_princess_diaries', dataString);
 
-          
+            // 如果绑定了本地手稿文件句柄，则同步写入磁盘
+            if (fileHandle) {
+                await syncToDisk(dataString);
+            }
 
             alert(t.alertSuccess);
 
@@ -1141,7 +1130,9 @@
                 const dataString = JSON.stringify(entries);
                 localStorage.setItem('ruigong_princess_diaries', dataString);
 
-                
+                if (fileHandle) {
+                    await syncToDisk(dataString);
+                }
                 
                 const month = dateToDelete.substring(0, 7);
                 editingDate = null;
@@ -1283,31 +1274,7 @@
                     });
             });
         }
-    </script>
-<script>
-    // 页面加载完成时自动执行的检测逻辑
-    window.addEventListener('DOMContentLoaded', () => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const token = urlParams.get('token');
 
-        if (token) {
-            // 如果链接里带了 token，说明是受邀客户，直接隐藏登记表单
-            // 并显示您的电子日记内容容器
-            document.getElementById('subscribeForm').style.display = 'none';
-            document.querySelector('.subtitle').style.display = 'none';
-            
-            // 假设您有一个 id 为 'diary-content' 的区域来存放日记
-            // 如果还没有，可以在页面上放一个 <div id="diary-content" style="display:none;">...</div>
-            const diaryContent = document.getElementById('diary-content');
-            if (diaryContent) {
-                diaryContent.style.display = 'block';
-            } else {
-                document.getElementById('message').innerHTML = "正在加载您的专属日记... / Loading your exclusive diary...";
-                // 这里可以执行跳转，或者展示日记内容
-                // window.location.href = "/diary-reader.html"; 
-            }
-        }
-    });
-</script>
+    </script>
 </body>
 </html>
