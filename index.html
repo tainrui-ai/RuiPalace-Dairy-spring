@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#F4EEDC">
@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>春天的心情 · 蕊宫</title>
+    <title>Spring Mood · Rui Palace</title>
 
     <style>
 :root {
@@ -434,7 +434,6 @@
         .poetry-footer:hover { opacity: 0.7; }
         .brand-footer { font-size: 0.85rem; color: var(--primary-color); letter-spacing: 0.03em; }
 
-        /* 静态外链式使用说明侧边栏标签样式 */
         .guide-sidebar-tab {
             position: fixed;
             right: 0;
@@ -465,36 +464,33 @@
             background: rgba(255, 255, 255, 0.95);
             padding-right: 13px;
         }
-/* 侧边抽屉核心样式 */
     </style>
 </head>
 <body>
-    <!-- 预留的日记内容容器（供后续密码/Token登录扩展使用）[cite: 21] -->
     <div id="diary-content" style="display: none;">
-        <h1>欢迎来到您的专属空间</h1>
+        <h1>Welcome to your exclusive space</h1>
     </div>
     
-    <!-- 直接连接到现成的 guide.html 静态文档[cite: 21] -->
-    <a href="guide.html" class="guide-sidebar-tab" id="guideTabLabel" target="_blank">使用说明</a>
+    <a href="guide.html" class="guide-sidebar-tab" id="guideTabLabel" target="_blank">Instructions</a>
 
     <div class="book-sheet">
-        <img src="" alt="花卉贴纸" class="corner-flower-sticker" id="stickerImg">
+        <img src="" alt="Flower Sticker" class="corner-flower-sticker" id="stickerImg">
 
         <div class="page cover-page active" id="pageCover">
-            <div class="cover-title-wrapper" title="点击即可修改标题">
+            <div class="cover-title-wrapper" title="Click to edit title">
                 <div class="cover-title-row">
-                    <h1 class="cover-title" id="coverTitle" contenteditable="true">春天的心情</h1>
+                    <h1 class="cover-title" id="coverTitle" contenteditable="true">Spring Mood</h1>
                     <span class="edit-pencil-icon">✏️</span>
                 </div>
-                <span class="edit-hint-text" id="editHintText">（点击标题可修改）</span>
+                <span class="edit-hint-text" id="editHintText">(Click title to edit)</span>
             </div>
 
-            <div class="cover-subtitle" id="coverSubtitle">—— 岁时流转 · 笔尖藏珍 ——</div>
-            <button class="btn-open" id="btnOpenText" onclick="goToPage('pageIndex')">翻开书卷</button>
+            <div class="cover-subtitle" id="coverSubtitle">Rhythms of the Seasons · Written in Ink</div>
+            <button class="btn-open" id="btnOpenText" onclick="goToPage('pageIndex')">Open Book</button>
             
             <div class="lang-switcher-bottom">
-                <button class="lang-btn active" onclick="switchLanguage('zh', this)">中</button>
-                <button class="lang-btn" onclick="switchLanguage('en', this)">EN</button>
+                <button class="lang-btn" onclick="switchLanguage('zh', this)">中</button>
+                <button class="lang-btn active" onclick="switchLanguage('en', this)">EN</button>
                 <button class="lang-btn" onclick="switchLanguage('de', this)">DE</button>
                 <button class="lang-btn" onclick="switchLanguage('fr', this)">FR</button>
                 <button class="lang-btn" onclick="switchLanguage('ru', this)">RU</button>
@@ -502,71 +498,71 @@
             </div>
 
             <div class="elegant-backup-bar">
-                <button class="elegant-link" onclick="exportDiaryData()" id="btnExportData">导出备份</button>
+                <button class="elegant-link" onclick="exportDiaryData()" id="btnExportData">Export Backup</button>
                 <span>·</span>
-                <label for="importFile" class="elegant-link" id="btnImportDataLabel" style="cursor: pointer;">恢复备份</label>
+                <label for="importFile" class="elegant-link" id="btnImportDataLabel" style="cursor: pointer;">Restore Backup</label>
                 <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importDiaryData(event)">
             </div>
             
-            <div style="margin-top: 20px; font-size: 0.9rem; color: var(--primary-color); letter-spacing: 0.25em;" id="coverBrand">—— 蕊宫 ——</div>
+            <div style="margin-top: 20px; font-size: 0.9rem; color: var(--primary-color); letter-spacing: 0.25em;" id="coverBrand">—— Rui Palace ——</div>
         </div>
 
         <div class="page" id="pageIndex">
             <div class="page-nav">
-                <span class="nav-title" id="indexTitleText">目录与过往藏珍</span>
-                <button class="btn-link" id="btnCloseBook" onclick="goToPage('pageCover')">合上书封</button>
+                <span class="nav-title" id="indexTitleText">Catalog & Past Treasures</span>
+                <button class="btn-link" id="btnCloseBook" onclick="goToPage('pageCover')">Close Cover</button>
             </div>
             <div class="index-actions">
-                <button class="btn-link" id="btnBackToMonths" onclick="renderMonthCatalog()" style="display: none; font-size: 0.95rem;">← 返回月份目录</button>
+                <button class="btn-link" id="btnBackToMonths" onclick="renderMonthCatalog()" style="display: none; font-size: 0.95rem;">← Back to Months</button>
                 <span id="currentMonthIndicator" style="font-size: 0.95rem; font-weight: 600; color: var(--primary-color);"></span>
-                <button class="btn-primary" id="btnNewDiary" onclick="openNewDiary()">+ 书写新日记</button>
+                <button class="btn-primary" id="btnNewDiary" onclick="openNewDiary()">+ Write New Diary</button>
             </div>
             <div class="index-page-content" id="catalogList"></div>
 
-            <div style="text-align: center; font-size: 0.85rem; color: var(--primary-color); letter-spacing: 0.15em; margin-top: 10px;" id="indexBrandText">—— 蕊宫 ——</div>
+            <div style="text-align: center; font-size: 0.85rem; color: var(--primary-color); letter-spacing: 0.15em; margin-top: 10px;" id="indexBrandText">—— Rui Palace ——</div>
         </div>
 
         <div class="page" id="pageWrite">
             <div class="page-nav">
-                <span class="nav-title" id="writePageTitle">落笔生花</span>
-                <button class="btn-link" id="btnBackCatalog" onclick="handleBackFromWrite()">返回目录</button>
+                <span class="nav-title" id="writePageTitle">Inking Blossoms</span>
+                <button class="btn-link" id="btnBackCatalog" onclick="handleBackFromWrite()">Back to Catalog</button>
             </div>
             
             <div class="sticker-toggle-bar">
-                <span id="stickerStatusHint">🌸 当前已贴上精致花卉装饰</span>
-                <button class="btn-link" onclick="toggleStickerToolbar()" id="btnToggleSticker" style="font-size: 0.85rem;">更换/调整贴纸</button>
+                <span id="stickerStatusHint">🌸 Floral sticker applied</span>
+                <button class="btn-link" onclick="toggleStickerToolbar()" id="btnToggleSticker" style="font-size: 0.85rem;">Change/Adjust Sticker</button>
             </div>
 
             <div class="sticker-toolbar" id="stickerToolbarPanel">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                    <span id="labelStickerPick" style="font-weight: 600;">🌸 选择贴纸：</span>
-                    <button class="btn-link" onclick="toggleStickerToolbar()" id="btnCloseStickerPanel" style="font-size: 0.8rem;">完成/收起</button>
+                    <span id="labelStickerPick" style="font-weight: 600;">🌸 Select Sticker:</span>
+                    <button class="btn-link" onclick="toggleStickerToolbar()" id="btnCloseStickerPanel" style="font-size: 0.8rem;">Done</button>
                 </div>
                 <div class="sticker-options" id="stickerThumbnails"></div>
                 <div style="display: flex; align-items: center; gap: 8px; margin-top: 10px; border-top: 1px dashed var(--line-color); padding-top: 6px;">
-                    <span id="labelStickerPos">贴纸角位：</span>
-                    <button class="pos-btn" onclick="setStickerPosition('top-right')" id="posTR">右上</button>
-                    <button class="pos-btn" onclick="setStickerPosition('top-left')" id="posTL">左上</button>
-                    <button class="pos-btn" onclick="setStickerPosition('bottom-right')" id="posBR">右下</button>
-                    <button class="pos-btn" onclick="setStickerPosition('bottom-left')" id="posBL">左下</button>
+                    <span id="labelStickerPos">Sticker Corner:</span>
+                    <button class="pos-btn" onclick="setStickerPosition('top-right')" id="posTR">Top-Right</button>
+                    <button class="pos-btn" onclick="setStickerPosition('top-left')" id="posTL">Top-Left</button>
+                    <button class="pos-btn" onclick="setStickerPosition('bottom-right')" id="posBR">Bottom-Right</button>
+                    <button class="pos-btn" onclick="setStickerPosition('bottom-left')" id="posBL">Bottom-Left</button>
                 </div>
             </div>
 
             <header class="diary-header">
-                <input type="text" class="editable-input" id="inputLocation" value="纽比贝格" style="width: 110px;">
+                <input type="text" class="editable-input" id="inputLocation" value="Neubiberg" style="width: 110px;">
                 <input type="date" class="editable-input" id="inputDate" style="width: 135px;">
-                <input type="text" class="editable-input" id="inputWeather" value="" style="width: 160px;">
+                <input type="text" class="editable-input" id="inputWeather" value="Spring · Sunny 24°C" style="width: 160px;">
             </header>
 
             <main class="writing-area">
-                <textarea class="diary-textarea" id="textareaContent" placeholder="在此落笔，记录节气与心境……"></textarea>
+                <textarea class="diary-textarea" id="textareaContent" placeholder="Write down your solar terms and moods here..."></textarea>
             </main>
 
             <footer class="diary-footer">
-                <button class="btn-link" id="btnDelete" style="color: var(--sub-text);" onclick="deleteCurrentDiary()">删除这篇</button>
-                <div class="poetry-footer" id="poetryFooterText" onclick="setRandomPoetry()" title="点击切换一首春日诗词">“等闲识得东风面，万紫千红总是春。”</div>
-                <div class="brand-footer" id="writeBrandText">—— 蕊宫 ——</div>
-                <button class="btn-primary" id="btnSaveRecord" onclick="saveAndReturnIndex()" style="padding: 6px 16px; font-size: 0.9rem;">保存收录</button>
+                <button class="btn-link" id="btnDelete" style="color: var(--sub-text);" onclick="deleteCurrentDiary()">Delete Entry</button>
+                <div class="poetry-footer" id="poetryFooterText" onclick="setRandomPoetry()" title="Click to change spring poetry">“Recognizing the east wind's face with ease, a myriad of purples and reds always mean spring.”</div>
+                <div class="brand-footer" id="writeBrandText">—— Rui Palace ——</div>
+                <button class="btn-primary" id="btnSaveRecord" onclick="saveAndReturnIndex()" style="padding: 6px 16px; font-size: 0.9rem;">Save & Record</button>
             </footer>
         </div>
     </div>
@@ -579,18 +575,18 @@
         let currentPoetryIndex = 0; 
         let fileHandle = null;
 
-        // 页面加载完成时自动执行的检测逻辑（预留以后密码登录/Token校验使用）
         window.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const token = urlParams.get('token');
 
             if (token) {
-                // 如果以后需要根据 token 或密码控制显示隐藏，可在此处扩展
                 const diaryContent = document.getElementById('diary-content');
                 if (diaryContent) {
                     diaryContent.style.display = 'block';
                 }
             }
+            // 页面加载后依据当前默认语言初始化文本
+            updatePageTexts();
         });
 
         const flowerList = [
@@ -655,7 +651,7 @@
                 stickerPos: "贴纸角位：",
                 closePanel: "完成/收起",
                 posTR: "右上", posTL: "左上", posBR: "右下", posBL: "左下",
-                defaultLocation: "城市",
+                defaultLocation: "纽比贝格",
                 defaultWeather: "立春 · 晴 24°C",
                 placeholder: "在此落笔，记录节气与心境……",
                 saveBtn: "保存收录",
@@ -677,7 +673,7 @@
             en: {
                 title: "Spring Mood",
                 editHint: "(Click title to edit)",
-                subtitle: "Seasons Flow · Treasures in Pen",
+                subtitle: "Rhythms of the Seasons · Written in Ink",
                 openBtn: "Open Book",
                 indexTitle: "Catalog & Past Treasures",
                 closeBook: "Close Cover",
@@ -691,7 +687,7 @@
                 stickerPos: "Sticker Corner:",
                 closePanel: "Done",
                 posTR: "Top-Right", posTL: "Top-Left", posBR: "Bottom-Right", posBL: "Bottom-Left",
-                defaultLocation: "your city",
+                defaultLocation: "Neubiberg",
                 defaultWeather: "Spring · Sunny 24°C",
                 placeholder: "Write down your solar terms and moods here...",
                 saveBtn: "Save & Record",
@@ -856,7 +852,8 @@
             }
         };
 
-        let currentLang = 'zh';
+        // 【修改点2】将默认启动语言改为英文 'en'
+        let currentLang = 'en';
 
         function switchLanguage(lang, btnElement) {
             currentLang = lang;
@@ -1101,7 +1098,6 @@
             const dataString = JSON.stringify(entries);
             localStorage.setItem('ruigong_princess_diaries', dataString);
 
-            // 如果绑定了本地手稿文件句柄，则同步写入磁盘
             if (fileHandle) {
                 await syncToDisk(dataString);
             }
@@ -1268,24 +1264,13 @@
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('./sw.js')
                     .then(reg => {
-                        console.log('Service Worker 注册成功:', reg.scope);
+                        console.log('Service Worker registered:', reg.scope);
                     })
                     .catch(err => {
-                        console.log('Service Worker 注册失败:', err);
+                        console.log('Service Worker registration failed:', err);
                     });
             });
         }
-
     </script>
-
-
-<!-- 背景遮罩 -->
-<div class="drawer-overlay" id="drawerOverlay" onclick="toggleGuideDrawer()"></div>
-
-
-
-        <!-- 可根据需要继续扩展区块 -->
-    </div>
-</div>
 </body>
 </html>
