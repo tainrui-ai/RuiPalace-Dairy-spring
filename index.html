@@ -465,6 +465,7 @@
             background: rgba(255, 255, 255, 0.95);
             padding-right: 13px;
         }
+/* 侧边抽屉核心样式 */
     </style>
 </head>
 <body>
@@ -1276,5 +1277,30 @@
         }
 
     </script>
+<!-- 触发抽屉的按钮（通常放在顶部导航栏） -->
+<button class="guide-trigger-btn" onclick="toggleGuideDrawer()">使用说明 / Guide</button>
+
+<!-- 背景遮罩 -->
+<div class="drawer-overlay" id="drawerOverlay" onclick="toggleGuideDrawer()"></div>
+
+<!-- 侧边拉出式抽屉 -->
+<div class="guide-drawer" id="guideDrawer">
+    <div class="guide-header">
+        <h3 id="drawerTitle">灵犀鉴 · 使用指南</h3>
+        <button class="guide-close-btn" onclick="toggleGuideDrawer()">&times;</button>
+    </div>
+    <div class="guide-body" id="guideContentArea">
+        <!-- 动态多语言或静态说明内容 -->
+        <div class="guide-section">
+            <h4 id="h2Title1">1. 核心理念</h4>
+            <p id="pText1">本站致力于传统美学与数字资产的融合。</p>
+        </div>
+        <div class="guide-section">
+            <h4 id="h2Title2">2. 多语言切换</h4>
+            <p id="pText2">点击右上角语言按钮可无缝切换中、英、德等版本。</p>
+        </div>
+        <!-- 可根据需要继续扩展区块 -->
+    </div>
+</div>
 </body>
 </html>
