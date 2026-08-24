@@ -64,3 +64,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     switchLanguage(savedLang);
 });
+
+// 切换抽屉显示与隐藏的控制函数
+function toggleGuideDrawer() {
+    const drawer = document.getElementById('guideDrawer');
+    const overlay = document.getElementById('drawerOverlay');
+    
+    if (drawer && overlay) {
+        drawer.classList.toggle('open');
+        overlay.classList.toggle('active');
+    }
+}
